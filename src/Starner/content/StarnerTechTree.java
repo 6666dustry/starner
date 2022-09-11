@@ -28,6 +28,8 @@ public class StarnerTechTree {
         newNode(StarnerBlocks.StarConduit, Blocks.mender, null, null);
         newNode(StarnerBlocks.StarDuster, Blocks.scorch, null, null);
         newNode(StarnerBlocks.StarRocket, Blocks.arc, null, null);
+        newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
+        newNode(StarnerBlocks.CometThrower, Blocks.hail, null, null);
     }
 
     private static void newNode(UnlockableContent content, UnlockableContent parent, @Nullable ItemStack[] req,

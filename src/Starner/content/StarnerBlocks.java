@@ -3,10 +3,8 @@ package Starner.content;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.blocks.production.Separator;
 import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
-import mindustry.type.unit.MissileUnitType;
 import mindustry.world.draw.*;
 
 import static Starner.content.StarnerItems.*;
@@ -373,10 +371,10 @@ public class StarnerBlocks {
             {
                 targetAir = false;
                 group = BlockGroup.turrets;
-                requirements(Category.turret, with(Items.copper, 30, MoonStone, 15));
+                requirements(Category.turret, with(CometPiece, 15, MoonStone, 35, Items.copper, 35));
                 description = "throw comet";
                 details = "boom!";
-                health = 1200;
+                health = 1150;
                 size = 3;
                 inaccuracy = 10f;
                 maxAmmo = 25;
@@ -388,7 +386,7 @@ public class StarnerBlocks {
                         StarnerItems.CometPiece, new ArtilleryBulletType(2f, 15) {
                             {
                                 collidesAir = false;
-                                splashDamage = 5;
+                                splashDamage = 8;
                                 splashDamageRadius = 75f;
                                 width = height = 15f;
                                 status = StatusEffects.freezing;
@@ -445,7 +443,7 @@ public class StarnerBlocks {
                 hasLiquids = hasPower = consumesPower = true;
                 liquidCapacity = 50f;
                 consumePower(120f / 60f);
-                consumeLiquid(Liquids.cryofluid, 2f);
+                consumeLiquid(Liquids.cryofluid, 2f / 60f);
                 updateEffect = StarnerFx.splashStar;
                 updateEffectChance = 0.25f;
                 craftEffect = StarnerFx.freezeAura;

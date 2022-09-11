@@ -17,10 +17,9 @@ public class StarnerItems {
         };
         CometPiece = new Item("comet-piece", Color.valueOf("AAAAAA")) {
             {
-                description = "It is came from moon.";
-                cost = 0.5f;
-                radioactivity = 0.6f;
-                charge = 0.2f;
+                description = "comet piece. very cool!";
+                cost = 0.75f;
+                flammability = -0.2f;
             }
         };
     }
