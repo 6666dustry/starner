@@ -33,6 +33,7 @@ public class Starner extends Mod {
     public void loadContent() {
         StarnerFx.load();
         StarnerItems.load();
+        StarnerUnitTypes.load();
         StarnerBlocks.load();
         StarnerTechTree.load();
     }

@@ -3,6 +3,7 @@ package Starner.content;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
 import mindustry.world.draw.*;
@@ -37,7 +38,9 @@ public class StarnerBlocks {
     StoneFuser, CometMixer,
 
             // turrets.
-            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometThrower;
+            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometThrower,
+            // unit factory.
+            StarFactory;
 
     public static void load() {
         StarShooter = new ItemTurret("star-shooter") {
@@ -305,8 +308,6 @@ public class StarnerBlocks {
 
                         Items.scrap, new BasicBulletType(3f, 4, "starner-star-bullet") {
                             {
-                                weaveMag = 1f;
-                                weaveScale = 1f;
                                 spin = 6f;
                                 lifetime = 45f;
                                 width = height = 5f;
@@ -315,6 +316,24 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                                 trailChance = 1f / 6f;
                                 trailEffect = new StarTrail();
+                            }
+                        },
+                        StarnerItems.CometPiece, new BasicBulletType(3f, 6, "starner-star-bullet") {
+                            {
+                                status = StatusEffects.freezing;
+                                spin = 6f;
+                                lifetime = 46f;
+                                width = height = 5f;
+                                ammoMultiplier = 7;
+                                frontColor = Color.valueOf("ffffffff");
+                                backColor = Color.valueOf("bbbbffff");
+                                despawnEffect = new Effect();
+                                trailChance = 1f / 5f;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        colorTo = Color.valueOf("bbbbffff");
+                                    }
+                                };
                             }
                         });
             }
@@ -416,6 +435,26 @@ public class StarnerBlocks {
                                     }
                                 };
                             }
+                        },
+                        Items.titanium, new ArtilleryBulletType(2f, 15) {
+                            {
+                                ammoMultiplier = 0.5f;
+                                collidesAir = false;
+                                splashDamage = 15;
+                                splashDamageRadius = 90f;
+                                width = height = 17.5f;
+                                frontColor = backColor = Color.valueOf("bbbbffff");
+                                trailChance = 1f;
+                                trailRotation = true;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        sizeFrom = 6.5f;
+                                        colorTo = Color.valueOf("7777ff");
+                                    }
+                                };
+                                despawnEffect = StarnerFx.freezeAura;
+
+                            }
                         });
             }
         };
@@ -453,13 +492,22 @@ public class StarnerBlocks {
                 size = 3;
                 health = 500;
                 consumeItems(with(Items.scrap, 3));
-                outputItem = new ItemStack(CometPiece, 3);
+                outputItem = new ItemStack(CometPiece, 2);
                 drawer = new DrawMulti(new DrawDefault(), new DrawLiquidRegion(), new DrawRegion("-rotate") {
                     {
                         spinSprite = true;
                         rotateSpeed = 5f;
                     }
                 });
+            }
+        };
+        StarFactory = new UnitFactory("star-factory") {
+            {
+                size = 3;
+                requirements(Category.units,
+                        with(StarnerItems.MoonStone, 40, Items.silicon, 30, Items.metaglass, 20));
+                plans = Seq.with(
+                        new UnitPlan(StarnerUnitTypes.DebriStar, 300f, with(MoonStone, 20)));
             }
         };
     }
