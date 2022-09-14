@@ -1,6 +1,6 @@
 package Starner.content;
 
-import Starner.content.entites.effect.StarTrail;
+import Starner.entites.effect.StarTrail;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;

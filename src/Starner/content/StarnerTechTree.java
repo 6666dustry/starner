@@ -8,6 +8,7 @@ import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Planets;
 import mindustry.content.SectorPresets;
+import mindustry.content.UnitTypes;
 import mindustry.content.TechTree.TechNode;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Objectives;
@@ -30,6 +31,8 @@ public class StarnerTechTree {
         newNode(StarnerBlocks.StarRocket, Blocks.arc, null, null);
         newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
         newNode(StarnerBlocks.CometThrower, Blocks.hail, null, null);
+        newNode(StarnerBlocks.StarFactory, Blocks.groundFactory, null, null);
+        newNode(StarnerUnitTypes.DebriStar, StarnerBlocks.StarFactory, null, null);
     }
 
     private static void newNode(UnlockableContent content, UnlockableContent parent, @Nullable ItemStack[] req,
