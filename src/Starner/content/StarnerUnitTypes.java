@@ -1,39 +1,37 @@
 package Starner.content;
 
-import Starner.entites.effect.StarTrail;
-import arc.func.Prov;
 import arc.graphics.Color;
-import arc.struct.Seq;
-import arc.util.Log;
 import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.BombBulletType;
-import mindustry.entities.effect.MultiEffect;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.gen.*;
 
 public class StarnerUnitTypes {
+
     public static UnitType DebriStar;
 
     public static void load() {
-
         DebriStar = new UnitType("debri-star") {
             {
-
                 constructor = UnitEntity::create;
+                logicControllable = true;
+                description = "very cheep unit.";
+                details = "flying crawler.";
                 flying = true;
                 speed = 3.5f;
                 health = 125;
+                range = 50f;
                 fallSpeed = Float.POSITIVE_INFINITY;
                 weapons.add(new Weapon() {
                     {
 
-                        range = 20f;
-                        reload = 1000f;
+                        range = 50f;
+                        reload = 333f;
                         rotate = true;
                         rotateSpeed = Float.POSITIVE_INFINITY;
                         bullet = new BasicBulletType() {
                             {
+                                range = 50f;
                                 instantDisappear = true;
                                 speed = 0;
                                 killShooter = true;

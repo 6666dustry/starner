@@ -1,10 +1,7 @@
 package Starner.world.draw;
 
 import arc.graphics.Color;
-import arc.graphics.g2d.TextureRegion;
-import mindustry.world.Block;
 import mindustry.world.draw.DrawFlame;
-import arc.Core;
 import arc.graphics.g2d.Draw;
 import mindustry.gen.Building;
 import mindustry.graphics.Layer;

@@ -11,7 +11,7 @@ public class StarnerItems {
             {
                 description = "It is came from moon.";
                 cost = 0.5f;
-                radioactivity = 0.6f;
+                radioactivity = 0.2f;
                 charge = 0.2f;
             }
         };
@@ -19,7 +19,7 @@ public class StarnerItems {
             {
                 description = "comet piece. very cool!";
                 cost = 0.75f;
-                flammability = -0.2f;
+                flammability = -0.3f;
             }
         };
     }

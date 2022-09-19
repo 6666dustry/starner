@@ -1,6 +1,4 @@
-stars are falling...
-yeah, this mod add stars.
-
-not tested on campain.
+this mod add beautiful things.
+like units, blocks, and more!
 
 have fun!

@@ -1,15 +1,13 @@
 package Starner.content;
 
-import Starner.entites.effect.StarTrail;
 import arc.graphics.Color;
-import arc.math.*;
 import mindustry.entities.Effect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
 
 public class StarnerFx {
-    public static Effect splashStar, healAura, fireAura, freezeAura;
+    public static Effect splashStar, healAura, fireAura, freezeAura, sporeAura;
 
     public static void load() {
         splashStar = new ParticleEffect() {
@@ -61,6 +59,20 @@ public class StarnerFx {
                 sizeFrom = 12f;
                 length = 120f;
                 colorTo = Color.valueOf("bbbbffaa");
+            }
+        });
+        sporeAura = new MultiEffect(new WaveEffect() {
+            {
+                colorTo = Color.valueOf("ff00ffaa");
+                sizeTo = 90f;
+            }
+        }, new ParticleEffect() {
+            {
+                region = "starner-star-bullet";
+                spin = 4f;
+                sizeFrom = 12f;
+                length = 120f;
+                colorTo = Color.valueOf("ff00ffaa");
             }
         });
     }

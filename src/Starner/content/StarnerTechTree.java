@@ -1,20 +1,14 @@
 package Starner.content;
 
-import java.lang.reflect.Array;
-
 import arc.struct.Seq;
 import arc.util.Nullable;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
-import mindustry.content.Planets;
-import mindustry.content.SectorPresets;
-import mindustry.content.UnitTypes;
 import mindustry.content.TechTree.TechNode;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Objectives;
 import mindustry.game.Objectives.Objective;
 import mindustry.type.ItemStack;
-import mindustry.type.SectorPreset;
 
 public class StarnerTechTree {
 
@@ -29,8 +23,9 @@ public class StarnerTechTree {
         newNode(StarnerBlocks.StarConduit, Blocks.mender, null, null);
         newNode(StarnerBlocks.StarDuster, Blocks.scorch, null, null);
         newNode(StarnerBlocks.StarRocket, Blocks.arc, null, null);
+        newNode(StarnerBlocks.CometFlyer, Blocks.scatter, null, null);
+        newNode(StarnerBlocks.CometThrower, Blocks.salvo, null, null);
         newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
-        newNode(StarnerBlocks.CometThrower, Blocks.hail, null, null);
         newNode(StarnerBlocks.StarFactory, Blocks.groundFactory, null, null);
         newNode(StarnerUnitTypes.DebriStar, StarnerBlocks.StarFactory, null, null);
     }

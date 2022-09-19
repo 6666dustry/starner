@@ -1,11 +1,7 @@
 package Starner;
 
 import Starner.content.*;
-import arc.util.Log;
-import mindustry.Vars;
-import mindustry.ctype.Content;
 import mindustry.mod.*;
-import mindustry.world.blocks.defense.turrets.ItemTurret;
 
 public class Starner extends Mod {
 
