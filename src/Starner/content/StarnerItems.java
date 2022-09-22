@@ -4,7 +4,7 @@ import arc.graphics.Color;
 import mindustry.type.Item;
 
 public class StarnerItems {
-    public static Item MoonStone, CometPiece;
+    public static Item MoonStone, CometPiece, SunCrystal;
 
     public static void load() {
         MoonStone = new Item("moon-stone", Color.valueOf("AAAAAA")) {
@@ -20,6 +20,13 @@ public class StarnerItems {
                 description = "comet piece. very cool!";
                 cost = 0.75f;
                 flammability = -0.3f;
+            }
+        };
+        SunCrystal = new Item("sun-crystal", Color.orange) {
+            {
+                description = "sun crystal. very hot!";
+                cost = 0.75f;
+                flammability = 1f;
             }
         };
     }

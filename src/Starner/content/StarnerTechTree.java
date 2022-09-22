@@ -28,6 +28,7 @@ public class StarnerTechTree {
         newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
         newNode(StarnerBlocks.StarFactory, Blocks.groundFactory, null, null);
         newNode(StarnerUnitTypes.DebriStar, StarnerBlocks.StarFactory, null, null);
+        newNode(StarnerUnitTypes.CometSlicer, StarnerUnitTypes.DebriStar, null, null);
     }
 
     private static void newNode(UnlockableContent content, UnlockableContent parent, @Nullable ItemStack[] req,
