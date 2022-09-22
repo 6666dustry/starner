@@ -25,7 +25,9 @@ public class StarnerTechTree {
         newNode(StarnerBlocks.StarRocket, Blocks.arc, null, null);
         newNode(StarnerBlocks.CometFlyer, Blocks.scatter, null, null);
         newNode(StarnerBlocks.CometThrower, Blocks.salvo, null, null);
+        newNode(StarnerBlocks.StarLancer, Blocks.lancer, null, null);
         newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
+        newNode(StarnerBlocks.SunConvergencer, Blocks.blastMixer, null, null);
         newNode(StarnerBlocks.StarFactory, Blocks.groundFactory, null, null);
         newNode(StarnerUnitTypes.DebriStar, StarnerBlocks.StarFactory, null, null);
         newNode(StarnerUnitTypes.CometSlicer, StarnerUnitTypes.DebriStar, null, null);

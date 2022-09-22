@@ -54,7 +54,7 @@ public class StarnerBlocks {
                 reload = 15;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        Items.copper, new BasicBulletType(2f, 10, "starner-star-bullet") {
+                        Items.copper, new BasicBulletType(2f, 15, "starner-star-bullet") {
                             {
                                 spin = 6f;
                                 lifetime = 1000f;
@@ -70,7 +70,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        StarnerItems.MoonStone, new BasicBulletType(2f, 14, "starner-star-bullet") {
+                        StarnerItems.MoonStone, new BasicBulletType(2f, 19, "starner-star-bullet") {
                             {
                                 pierce = true;
                                 pierceCap = 3;
@@ -112,7 +112,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                                 fragBullets = 3;
                                 fragSpread = 360 / fragBullets;
-                                fragBullet = new BasicBulletType(2f, 8, "starner-star-bullet") {
+                                fragBullet = new BasicBulletType(2f, 13, "starner-star-bullet") {
                                     {
                                         status = StatusEffects.freezing;
                                         pierce = true;
@@ -141,7 +141,7 @@ public class StarnerBlocks {
                             }
                         },
 
-                        Items.pyratite, new BasicBulletType(2f, 9, "starner-star-bullet") {
+                        Items.pyratite, new BasicBulletType(2f, 14, "starner-star-bullet") {
                             {
                                 pierce = true;
                                 pierceCap = 3;
@@ -209,7 +209,7 @@ public class StarnerBlocks {
                 reload = 50;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        Items.lead, new BasicBulletType(2f, 8, "starner-star-bullet") {
+                        Items.lead, new BasicBulletType(2f, 11, "starner-star-bullet") {
                             {
                                 shrinkX = 0.5f;
                                 spin = 6f;
@@ -224,7 +224,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        StarnerItems.MoonStone, new BasicBulletType(2f, 14, "starner-star-bullet") {
+                        StarnerItems.MoonStone, new BasicBulletType(2f, 17, "starner-star-bullet") {
                             {
                                 shrinkX = 0.5f;
                                 spin = 6f;
@@ -239,7 +239,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        Items.silicon, new BasicBulletType(2f, 19, "starner-star-bullet") {
+                        Items.silicon, new BasicBulletType(2f, 22, "starner-star-bullet") {
                             {
                                 inaccuracy = 50f;
                                 shrinkX = 0.5f;
@@ -293,7 +293,7 @@ public class StarnerBlocks {
                                 ammoMultiplier = 2;
                                 frontColor = backColor = Color.valueOf("ffffffff");
                                 splashDamageRadius = 100f;
-                                splashDamage = 8;
+                                splashDamage = 20;
                                 healPercent = 2.5f;
                                 despawnEffect = hitEffect = StarnerFx.sporeAura;
                             }
@@ -319,7 +319,7 @@ public class StarnerBlocks {
                                 ammoMultiplier = 3;
                                 frontColor = backColor = Color.valueOf("ffffffff");
                                 splashDamageRadius = 100f;
-                                splashDamage = 5;
+                                splashDamage = 25;
 
                                 despawnEffect = hitEffect = StarnerFx.fireAura;
                             }
@@ -330,9 +330,9 @@ public class StarnerBlocks {
                                 lifetime = 0f;
                                 ammoMultiplier = 3;
                                 frontColor = backColor = Color.valueOf("ffffffff");
-                                rangeChange = 15f;
+                                rangeChange = 20f;
                                 splashDamageRadius = range + rangeChange;
-                                splashDamage = 10;
+                                splashDamage = 23;
 
                                 despawnEffect = hitEffect = StarnerFx.freezeAura;
                             }
@@ -357,25 +357,25 @@ public class StarnerBlocks {
                 coolantMultiplier = 1.4f;
                 ammo(
 
-                        Items.scrap, new BasicBulletType(3f, 7, "starner-star-bullet") {
+                        Items.scrap, new BasicBulletType(3f, 14, "starner-star-bullet") {
                             {
                                 spin = 6f;
                                 lifetime = 45f;
                                 width = height = 5f;
-                                ammoMultiplier = 5;
+                                ammoMultiplier = 6;
                                 frontColor = backColor = Color.valueOf("ffffffff");
                                 despawnEffect = new Effect();
                                 trailChance = 1f / 6f;
                                 trailEffect = new StarTrail();
                             }
                         },
-                        StarnerItems.CometPiece, new BasicBulletType(3f, 10, "starner-star-bullet") {
+                        StarnerItems.CometPiece, new BasicBulletType(3f, 20, "starner-star-bullet") {
                             {
                                 status = StatusEffects.freezing;
                                 spin = 6f;
                                 lifetime = 46f;
                                 width = height = 5f;
-                                ammoMultiplier = 9;
+                                ammoMultiplier = 10;
                                 frontColor = Color.valueOf("ffffffff");
                                 backColor = Color.valueOf("bbbbffff");
                                 despawnEffect = new Effect();
@@ -396,7 +396,7 @@ public class StarnerBlocks {
                 requirements(Category.turret, with(MoonStone, 100, Items.silicon, 70, Items.metaglass, 80));
                 description = "shot little rocket.";
                 details = "rocket!";
-                health = 1200;
+                health = 900;
                 range = 225f;
                 ;
                 size = 2;
@@ -404,7 +404,7 @@ public class StarnerBlocks {
                 consumePower(200f / 60f);
                 shootSound = Sounds.missile;
                 coolant = consumeCoolant(size / 10f);
-                BulletType spawn = new BasicBulletType(3f, 8, "starner-star-bullet") {
+                BulletType spawn = new BasicBulletType(3f, 16, "starner-star-bullet") {
                     {
                         lifetime = 75f;
                         frontColor = backColor = Color.valueOf("ffffffff");
@@ -455,9 +455,9 @@ public class StarnerBlocks {
                 shootSound = Sounds.artillery;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        Items.metaglass, new ArtilleryBulletType(3.5f, 13) {
+                        Items.metaglass, new ArtilleryBulletType(3.5f, 30) {
                             {
-                                ammoMultiplier = 2;
+                                ammoMultiplier = 3;
                                 shake = 1f;
                                 velocityRnd = 0.2f;
                                 lifetime = 60f;
@@ -480,7 +480,7 @@ public class StarnerBlocks {
                                 fragSpread = 360f / fragBullets;
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragVelocityMin = fragVelocityMax = 1f;
-                                fragBullet = new LaserBulletType(7) {
+                                fragBullet = new LaserBulletType(12) {
                                     {
                                         collidesAir = true;
                                         lifetime = 15f;
@@ -493,9 +493,9 @@ public class StarnerBlocks {
                                 };
                             }
                         },
-                        StarnerItems.CometPiece, new ArtilleryBulletType(3.5f, 15) {
+                        StarnerItems.CometPiece, new ArtilleryBulletType(3.5f, 40) {
                             {
-                                ammoMultiplier = 2;
+                                ammoMultiplier = 4;
                                 shake = 1f;
                                 velocityRnd = 0.2f;
                                 lifetime = 60f;
@@ -519,7 +519,7 @@ public class StarnerBlocks {
                                 fragSpread = 360f / fragBullets;
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragVelocityMin = fragVelocityMax = 1f;
-                                fragBullet = new LaserBulletType(7) {
+                                fragBullet = new LaserBulletType(12) {
                                     {
                                         collidesAir = true;
                                         status = StatusEffects.freezing;
@@ -533,10 +533,10 @@ public class StarnerBlocks {
                                 };
                             }
                         },
-                        Items.blastCompound, new ArtilleryBulletType(3.5f, 25) {
+                        Items.blastCompound, new ArtilleryBulletType(3.5f, 50) {
                             {
                                 status = StatusEffects.blasted;
-                                ammoMultiplier = 4;
+                                ammoMultiplier = 5;
                                 shake = 1f;
                                 velocityRnd = 0.2f;
                                 lifetime = 60f;
@@ -556,7 +556,7 @@ public class StarnerBlocks {
                                 despawnEffect = Fx.massiveExplosion;
                             }
                         },
-                        Items.pyratite, new ArtilleryBulletType(3.5f, 10) {
+                        Items.pyratite, new ArtilleryBulletType(3.5f, 35) {
                             {
                                 status = StatusEffects.burning;
                                 ammoMultiplier = 4;
@@ -607,7 +607,7 @@ public class StarnerBlocks {
                 shootSound = Sounds.missile;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        StarnerItems.MoonStone, new BasicBulletType(2f, 10, "starner-star-bullet") {
+                        StarnerItems.MoonStone, new BasicBulletType(2f, 20, "starner-star-bullet") {
                             {
                                 spin = 6f;
                                 lifetime = 60f;
@@ -624,7 +624,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        Items.silicon, new BasicBulletType(2f, 10, "starner-star-bullet") {
+                        Items.silicon, new BasicBulletType(2f, 25, "starner-star-bullet") {
                             {
                                 spin = 6f;
                                 lifetime = 60f;
@@ -641,7 +641,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        StarnerItems.CometPiece, new BasicBulletType(2f, 10, "starner-star-bullet") {
+                        StarnerItems.CometPiece, new BasicBulletType(2f, 30, "starner-star-bullet") {
                             {
                                 status = StatusEffects.freezing;
                                 ammoMultiplier = 9;
@@ -682,10 +682,15 @@ public class StarnerBlocks {
                 maxAmmo = 15;
                 range = 110f;
                 reload = 60;
+                heatColor = Color.red;
+                moveWhileCharging = false;
+                accurateDelay = false;
+                recoil = 2.5f;
+                shootSound = Sounds.laser;
 
                 consumePower(180f / 60);
                 coolant = consumeCoolant(size / 10f);
-                ammo(CometPiece, new FragLaserBulletType(30) {
+                ammo(CometPiece, new FragLaserBulletType(50) {
                     {
                         status = StatusEffects.freezing;
                         range = 110f;
@@ -696,7 +701,7 @@ public class StarnerBlocks {
                         fragRandomSpread = 0f;
                         fragSpread = 360f / fragBullets;
                         sideLength = 10f;
-                        fragBullet = new BasicBulletType(4f, 10, "starner-star-bullet") {
+                        fragBullet = new BasicBulletType(4f, 15, "starner-star-bullet") {
                             {
                                 status = StatusEffects.freezing;
                                 spin = 6f;
@@ -710,7 +715,7 @@ public class StarnerBlocks {
                             }
                         };
                     }
-                }, SunCrystal, new FragLaserBulletType(35) {
+                }, SunCrystal, new FragLaserBulletType(65) {
                     {
                         status = StatusEffects.melting;
                         colors[0] = Color.orange;
@@ -722,7 +727,7 @@ public class StarnerBlocks {
                         fragRandomSpread = 0f;
                         fragSpread = 360f / fragBullets;
 
-                        fragBullet = new BasicBulletType(2f, 9, "starner-star-bullet") {
+                        fragBullet = new BasicBulletType(2f, 20, "starner-star-bullet") {
                             {
                                 status = StatusEffects.melting;
                                 spin = 6f;
@@ -738,7 +743,7 @@ public class StarnerBlocks {
                         };
                     }
                 },
-                        Items.blastCompound, new FragLaserBulletType(50) {
+                        Items.blastCompound, new FragLaserBulletType(70) {
                             {
                                 status = StatusEffects.blasted;
                                 colors[0] = Color.red;
@@ -750,7 +755,7 @@ public class StarnerBlocks {
                                 fragRandomSpread = 0f;
                                 fragSpread = 360f / fragBullets;
 
-                                fragBullet = new BasicBulletType(4f, 13, "starner-star-bullet") {
+                                fragBullet = new BasicBulletType(4f, 17, "starner-star-bullet") {
                                     {
                                         status = StatusEffects.blasted;
                                         spin = 6f;
@@ -763,7 +768,7 @@ public class StarnerBlocks {
                                 };
                             }
                         },
-                        Items.plastanium, new FragLaserBulletType(20) {
+                        Items.plastanium, new FragLaserBulletType(30) {
                             {
                                 collidesTeam = true;
                                 status = StatusEffects.blasted;
@@ -776,7 +781,7 @@ public class StarnerBlocks {
                                 fragRandomSpread = 0f;
                                 fragSpread = 360f / fragBullets;
                                 healAmount = 30;
-                                fragBullet = new BasicBulletType(3f, 12, "starner-star-bullet") {
+                                fragBullet = new BasicBulletType(3f, 18, "starner-star-bullet") {
                                     {
 
                                         collidesTeam = true;
