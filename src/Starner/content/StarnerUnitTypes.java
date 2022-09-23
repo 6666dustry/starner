@@ -23,8 +23,9 @@ public class StarnerUnitTypes {
                 speed = 3.5f;
                 health = 105;
                 fallSpeed = Float.POSITIVE_INFINITY;
-                range = 6f;
-                maxRange = 6f;
+                range = 16f;
+                maxRange = 10f;
+
                 weapons.add(new Weapon() {
                     {
                         mirror = false;
@@ -34,21 +35,22 @@ public class StarnerUnitTypes {
                         rotateSpeed = Float.POSITIVE_INFINITY;
                         bullet = new BasicBulletType() {
                             {
-                                range = 6f;
-                                maxRange = 6f;
+
                                 instantDisappear = true;
-                                speed = 3f;
+                                speed = 0f;
                                 killShooter = true;
                                 splashDamage = 10;
-                                splashDamageRadius = 60f;
+                                splashDamageRadius = 24f;
                                 fragBullets = 14;
                                 fragLifeMax = fragLifeMin = fragVelocityMax = fragVelocityMin = 1f;
                                 fragRandomSpread = 0f;
                                 fragSpread = 360f / fragBullets;
+                                lifetime = 0f;
+                                rangeOverride = 10f;
                                 fragBullet = new BasicBulletType(3f, 8, "starner-star-bullet") {
                                     {
-                                        range = 6f;
-                                        maxRange = 6f;
+                                        rangeOverride = 16f;
+
                                         frontColor = backColor = Color.valueOf("ffffffff");
                                         weaveRandom = false;
                                         lifetime = 35f;
@@ -71,24 +73,21 @@ public class StarnerUnitTypes {
                 speed = 2.5f;
                 health = 225;
                 armor = 1;
-                range = 50f;
+                range = 75f;
                 deathExplosionEffect = StarnerFx.splashStar;
                 fallSpeed = Float.POSITIVE_INFINITY;
                 weapons.add(new Weapon("starner-star-laser") {
                     {
                         y = 6f;
                         layerOffset = -1;
-                        range = 50f;
                         reload = 45f;
                         rotate = false;
                         shootSound = Sounds.laser;
                         bullet = new LaserBulletType(15) {
                             {
-                                range = 50f;
+                                range = 75f;
                                 length = 55f;
                                 instantDisappear = true;
-                                splashDamage = 5;
-                                splashDamageRadius = 50f;
                                 fragBullets = 16;
                                 fragLifeMax = fragLifeMin = fragVelocityMax = fragVelocityMin = 1f;
                                 fragRandomSpread = 0f;

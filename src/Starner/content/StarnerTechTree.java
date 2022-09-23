@@ -2,35 +2,49 @@ package Starner.content;
 
 import arc.struct.Seq;
 import arc.util.Nullable;
-import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.TechTree.TechNode;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Objectives;
 import mindustry.game.Objectives.Objective;
 import mindustry.type.ItemStack;
+import static Starner.content.StarnerBlocks.*;
+import static Starner.content.StarnerItems.*;
+import static Starner.content.StarnerUnitTypes.*;
+import static mindustry.content.Blocks.*;
 
 public class StarnerTechTree {
 
     public static void load() {
         // item.
-        newNode(StarnerItems.MoonStone, Items.coal, null, Seq.with(new Objectives.Produce(StarnerItems.MoonStone)));
-        // crafting.
-        newNode(StarnerBlocks.StoneFuser, Blocks.graphitePress, null, null);
-        // turret.
-        newNode(StarnerBlocks.StarShooter, Blocks.duo, null, null);
-        newNode(StarnerBlocks.StarCannon, StarnerBlocks.StarShooter, null, null);
-        newNode(StarnerBlocks.StarConduit, Blocks.mender, null, null);
-        newNode(StarnerBlocks.StarDuster, Blocks.scorch, null, null);
-        newNode(StarnerBlocks.StarRocket, Blocks.arc, null, null);
-        newNode(StarnerBlocks.CometFlyer, Blocks.scatter, null, null);
-        newNode(StarnerBlocks.CometThrower, Blocks.salvo, null, null);
-        newNode(StarnerBlocks.StarLancer, Blocks.lancer, null, null);
-        newNode(StarnerBlocks.CometMixer, Blocks.cryofluidMixer, null, null);
-        newNode(StarnerBlocks.SunConvergencer, Blocks.blastMixer, null, null);
-        newNode(StarnerBlocks.StarFactory, Blocks.groundFactory, null, null);
-        newNode(StarnerUnitTypes.DebriStar, StarnerBlocks.StarFactory, null, null);
-        newNode(StarnerUnitTypes.CometSlicer, StarnerUnitTypes.DebriStar, null, null);
+        newNode(MoonStone, Items.coal, null, Seq.with(new Objectives.Produce(MoonStone)));
+        newNode(CometPiece, MoonStone, null, Seq.with(new Objectives.Produce(CometPiece)));
+        newNode(SunCrystal, CometPiece, null, Seq.with(new Objectives.Produce(SunCrystal)));
+        newNodes(
+                // crafting.
+                StoneFuser, graphitePress,
+                CometMixer, cryofluidMixer,
+                SunConvergencer, blastMixer,
+                // turret.
+                StarShooter, duo,
+                StarCannon, StarShooter,
+                StarConduit, mender,
+                StarDuster, scorch,
+                StarRocket, arc,
+                CometFlyer, scatter,
+                CometThrower, salvo,
+                StarLancer, lancer,
+                // unit.
+                StarFactory, groundFactory,
+                DebriStar, StarFactory,
+                CometSlicer, DebriStar,
+                SolarPointer, repairTurret);
+    }
+
+    private static void newNodes(UnlockableContent... nodes) {
+        for (int i = 0; i < nodes.length; i += 2) {
+            newNode(nodes[i], nodes[i + 1], null, null);
+        }
     }
 
     private static void newNode(UnlockableContent content, UnlockableContent parent, @Nullable ItemStack[] req,

@@ -7,6 +7,7 @@ import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
 import mindustry.world.draw.*;
+import Starner.world.blocks.units.StatusRepairTurret;
 
 import static Starner.content.StarnerItems.*;
 import static mindustry.type.ItemStack.*;
@@ -32,6 +33,7 @@ public class StarnerBlocks {
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer,
+            SolarPointer,
             // unit factory.
             StarFactory;
 
@@ -202,6 +204,7 @@ public class StarnerBlocks {
                 details = "How many...?";
                 health = 750;
                 size = 2;
+                targetAir = false;
                 maxAmmo = 20;
                 inaccuracy = 5f;
                 range = 135;
@@ -209,11 +212,11 @@ public class StarnerBlocks {
                 reload = 50;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        Items.lead, new BasicBulletType(2f, 11, "starner-star-bullet") {
+                        Items.lead, new BasicBulletType(2f, 16, "starner-star-bullet") {
                             {
+                                collidesAir = false;
                                 shrinkX = 0.5f;
                                 spin = 6f;
-                                lifetime = 135f / speed;
                                 width = height = 10f;
                                 ammoMultiplier = 3;
                                 frontColor = backColor = Color.valueOf("ccccccff");
@@ -224,11 +227,11 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        StarnerItems.MoonStone, new BasicBulletType(2f, 17, "starner-star-bullet") {
+                        StarnerItems.MoonStone, new BasicBulletType(2f, 23, "starner-star-bullet") {
                             {
+                                collidesAir = false;
                                 shrinkX = 0.5f;
                                 spin = 6f;
-                                lifetime = 135f / speed;
                                 width = height = 10f;
                                 ammoMultiplier = 3;
                                 frontColor = backColor = Color.valueOf("ffffffff");
@@ -239,13 +242,13 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         },
-                        Items.silicon, new BasicBulletType(2f, 22, "starner-star-bullet") {
+                        Items.silicon, new BasicBulletType(2f, 28, "starner-star-bullet") {
                             {
+                                collidesAir = false;
                                 inaccuracy = 50f;
                                 shrinkX = 0.5f;
                                 spin = 6f;
 
-                                lifetime = 135f / speed;
                                 width = height = 10f;
                                 ammoMultiplier = 3;
                                 frontColor = backColor = Color.valueOf("ffffffff");
@@ -258,6 +261,7 @@ public class StarnerBlocks {
                                 despawnEffect = new Effect();
                             }
                         });
+                limitRange();
             }
         };
 
@@ -288,6 +292,7 @@ public class StarnerBlocks {
                 ammo(
                         Items.sporePod, new BombBulletType() {
                             {
+                                knockback = 3f;
                                 status = StatusEffects.sporeSlowed;
                                 lifetime = 0f;
                                 ammoMultiplier = 2;
@@ -300,11 +305,12 @@ public class StarnerBlocks {
                         },
                         StarnerItems.MoonStone, new BombBulletType() {
                             {
+                                knockback = 3f;
                                 lifetime = 0f;
                                 ammoMultiplier = 1;
                                 frontColor = backColor = Color.valueOf("ffffffff");
                                 splashDamageRadius = 100f;
-                                splashDamage = 0;
+                                splashDamage = 15;
                                 healPercent = 2.5f;
 
                                 healAmount = 10;
@@ -314,6 +320,7 @@ public class StarnerBlocks {
                         },
                         Items.pyratite, new BombBulletType() {
                             {
+                                knockback = 3f;
                                 status = StatusEffects.burning;
                                 lifetime = 0f;
                                 ammoMultiplier = 3;
@@ -326,6 +333,7 @@ public class StarnerBlocks {
                         },
                         StarnerItems.CometPiece, new BombBulletType() {
                             {
+                                knockback = 3f;
                                 status = StatusEffects.freezing;
                                 lifetime = 0f;
                                 ammoMultiplier = 3;
@@ -884,6 +892,26 @@ public class StarnerBlocks {
                         with(StarnerItems.MoonStone, 40, Items.silicon, 35, Items.metaglass, 25));
                 plans = Seq.with(
                         new UnitPlan(StarnerUnitTypes.DebriStar, 300f, with(MoonStone, 20)));
+            }
+        };
+        SolarPointer = new StatusRepairTurret("solar-pointer") {
+            {
+                healCircleColor = Color.orange.cpy().mul(1.1f, 1.1f, 1.1f, 0.25f);
+                healCircleLineColor = Color.orange.cpy().mul(1f, 1.1f, 1.1f, 0.75f);
+                laserColor = Color.orange.cpy().mul(1f, 1.1f, 1.1f, 0.75f);
+                beamWidth = 1.5f;
+                healRadius = 35f;
+                healSpeed = 0.33f;
+                statusEffect = StatusEffects.overclock;
+                coolantUse = 0.25f;
+                requirements(Category.units,
+                        with(StarnerItems.MoonStone, 50, Items.silicon, 35, SunCrystal, 40));
+                size = 3;
+                health = 720;
+                powerUse = 10f;
+                repairSpeed = 5f;
+                repairRadius = 240f;
+                acceptCoolant = true;
             }
         };
     }
