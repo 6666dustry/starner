@@ -8,11 +8,14 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
 import mindustry.world.draw.*;
 import Starner.world.blocks.units.StatusRepairTurret;
+import mindustry.entities.UnitSorts;
 
 import static Starner.content.StarnerItems.*;
 import static mindustry.type.ItemStack.*;
 
 import Starner.entites.bullet.FragLaserBulletType;
+import Starner.entites.bullet.HealPointBulletType;
+import Starner.entites.effect.SplashLiquids;
 import Starner.entites.effect.StarTrail;
 import Starner.world.draw.DrawFusion;
 import arc.graphics.Color;
@@ -32,10 +35,10 @@ public class StarnerBlocks {
     StoneFuser, CometMixer, SunConvergencer,
 
             // turrets.
-            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer,
-            SolarPointer,
+            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
+            Wind,
             // unit factory.
-            StarFactory;
+            StarFactory, SolarPointer;
 
     public static void load() {
         StarShooter = new ItemTurret("star-shooter") {
@@ -397,6 +400,135 @@ public class StarnerBlocks {
                         });
             }
         };
+        StarBow = new ItemTurret("star-bow") {
+            {
+                shootCone = 1f;
+                unitSort = UnitSorts.strongest;
+                group = BlockGroup.turrets;
+                requirements(Category.turret, with(MoonStone, 50, Items.copper, 65, Items.lead, 45));
+                description = "shot single bullet.";
+                details = "bow.";
+                health = 750;
+                size = 2;
+                inaccuracy = 0f;
+                maxAmmo = 10;
+                reload = 150f;
+                coolant = consumeCoolant(size / 10f);
+                heatColor = Color.yellow;
+                accurateDelay = false;
+                ammoPerShot = 2;
+                targetHealing = true;
+                float brange = range = 290f;
+                ammo(
+                        Items.copper, new PointBulletType() {
+                            {
+                                speed = brange;
+                                buildingDamageMultiplier = 0.25f;
+                                damage = 75;
+                                trailSpacing = 1f;
+                                trailEffect = new StarTrail();
+                                despawnEffect = new StarTrail() {
+                                    {
+                                        particles = 8;
+                                        sizeFrom = 10f;
+                                        lifetime = 20f;
+                                        length = 60f;
+                                    }
+                                };
+                            }
+                        },
+                        MoonStone, new PointBulletType() {
+                            {
+                                ammoMultiplier = 4f;
+                                speed = brange;
+                                buildingDamageMultiplier = 0.25f;
+                                damage = 100;
+                                splashDamageRadius = 40f;
+                                splashDamage = 18f;
+                                trailSpacing = 1f;
+                                trailEffect = new StarTrail();
+                                despawnEffect = new StarTrail() {
+                                    {
+                                        particles = 8;
+                                        sizeFrom = 10f;
+                                        lifetime = 20f;
+                                        length = 60f;
+                                    }
+                                };
+                            }
+                        },
+                        Items.graphite, new PointBulletType() {
+                            {
+                                rangeChange = -30f;
+                                reloadMultiplier = 0.5f;
+                                speed = brange;
+                                buildingDamageMultiplier = 0.25f;
+                                damage = 300;
+                                trailSpacing = 1f;
+                                trailEffect = new StarTrail();
+                                despawnEffect = new StarTrail() {
+                                    {
+                                        particles = 8;
+                                        sizeFrom = 10f;
+                                        lifetime = 20f;
+                                        length = 60f;
+                                    }
+                                };
+                            }
+                        },
+                        CometPiece, new PointBulletType() {
+                            {
+                                ammoMultiplier = 3;
+                                reloadMultiplier = 1.5f;
+                                speed = brange;
+                                buildingDamageMultiplier = 0.25f;
+                                damage = 100;
+                                status = StatusEffects.freezing;
+                                trailSpacing = 1f;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        colorTo = Color.sky;
+                                    }
+                                };
+                                despawnEffect = new StarTrail() {
+                                    {
+                                        particles = 8;
+                                        sizeFrom = 10f;
+                                        colorTo = Color.sky;
+                                        lifetime = 20f;
+                                        length = 60f;
+                                    }
+                                };
+                            }
+                        },
+                        Items.plastanium, new HealPointBulletType() {
+                            {
+                                ammoMultiplier = 4;
+                                rangeChange = 50f;
+                                speed = brange;
+                                buildingDamageMultiplier = 0.25f;
+                                damage = 50;
+                                healPercent = 10f;
+                                collidesTeam = true;
+                                trailSpacing = 1f;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        colorTo = Pal.heal;
+                                    }
+                                };
+                                despawnEffect = new StarTrail() {
+                                    {
+                                        particles = 8;
+                                        sizeFrom = 10f;
+                                        colorTo = Pal.heal;
+                                        lifetime = 20f;
+                                        length = 60f;
+                                    }
+                                };
+                            }
+                        });
+            }
+        };
 
         StarRocket = new PowerTurret("star-rocket") {
             {
@@ -405,14 +537,14 @@ public class StarnerBlocks {
                 description = "shot little rocket.";
                 details = "rocket!";
                 health = 900;
-                range = 225f;
+                range = 205f;
                 ;
                 size = 2;
                 reload = 100f;
                 consumePower(200f / 60f);
                 shootSound = Sounds.missile;
                 coolant = consumeCoolant(size / 10f);
-                BulletType spawn = new BasicBulletType(3f, 16, "starner-star-bullet") {
+                BulletType spawn = new BasicBulletType(3f, 22, "starner-star-bullet") {
                     {
                         lifetime = 75f;
                         frontColor = backColor = Color.valueOf("ffffffff");
@@ -431,7 +563,7 @@ public class StarnerBlocks {
                 shootType = new MissileBulletType(3.5f, 20) {
                     {
                         frontColor = backColor = Color.valueOf("ffffffff");
-                        lifetime = 75f;
+                        lifetime = 70f;
                         fragBullet = spawn;
                         fragBullets = 6;
                         fragSpread = 60f;
@@ -483,7 +615,7 @@ public class StarnerBlocks {
                                     }
                                 };
                                 despawnEffect = StarnerFx.freezeAura;
-                                fragBullets = 10;
+                                fragBullets = 6;
                                 fragRandomSpread = 5f;
                                 fragSpread = 360f / fragBullets;
                                 fragLifeMin = fragLifeMax = 1f;
@@ -561,6 +693,21 @@ public class StarnerBlocks {
                                         colorTo = Color.valueOf("ff555555");
                                     }
                                 };
+                                fragBullets = 4;
+                                fragRandomSpread = 0f;
+                                fragSpread = 360f / fragBullets;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragVelocityMin = fragVelocityMax = 1f;
+                                fragBullet = new LaserBulletType(22) {
+                                    {
+                                        collidesAir = true;
+                                        lifetime = 15f;
+                                        length = 45f;
+
+                                        colors[0] = Color.red;
+                                        despawnEffect = new Effect();
+                                    }
+                                };
                                 despawnEffect = Fx.massiveExplosion;
                             }
                         },
@@ -587,7 +734,22 @@ public class StarnerBlocks {
                                         colorTo = Color.valueOf("ff999955");
                                     }
                                 };
-                                despawnEffect = Fx.lava;
+                                fragBullets = 5;
+                                fragRandomSpread = 0f;
+                                fragSpread = 360f / fragBullets;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragVelocityMin = fragVelocityMax = 1f;
+                                fragBullet = new LaserBulletType(18) {
+                                    {
+                                        collidesAir = true;
+                                        lifetime = 15f;
+                                        length = 45f;
+
+                                        colors[0] = Color.orange;
+                                        despawnEffect = new Effect();
+                                    }
+                                };
+                                despawnEffect = Fx.massiveExplosion;
                             }
                         });
             }
@@ -810,6 +972,113 @@ public class StarnerBlocks {
                         });
             }
         };
+        Wind = new LiquidTurret("wind") {
+            {
+                group = BlockGroup.turrets;
+                requirements(
+                        Category.turret,
+                        with(
+                                Items.copper, 30,
+                                MoonStone, 20));
+                shoot = new ShootAlternate() {
+                    {
+                        shots = 100;
+                        barrels = 1;
+                        spread = 3.5f;
+                    }
+                };
+
+                shootSound = Sounds.bigshot;
+                description = "blast liquids.";
+                details = "shower!";
+                health = 1860;
+                size = 3;
+                inaccuracy = 60f;
+                liquidCapacity = 200f;
+                recoil = 3f;
+                reload = 90;
+                targetGround = false;
+                shootEffect = null;
+
+                float tRange = 155f;
+                range = tRange;
+
+                ammo(Liquids.water, new LiquidBulletType(Liquids.water) {
+                    {
+                        shootEffect = new SplashLiquids(liquid) {
+                            {
+                                length = tRange;
+                                cone = 60f;
+                                lifetime = tRange / speed;
+                                particles = 1;
+                            }
+                        };
+                        collidesGround = false;
+                        statusDuration = 60f * 6f;
+                        damage = 0.1f;
+                        ammoMultiplier = 0.01f;
+                        knockback = 10f;
+                        speed = 8.5f;
+                        lifetime = tRange / speed;
+                    }
+                }, Liquids.slag, new LiquidBulletType(Liquids.slag) {
+                    {
+                        shootEffect = new SplashLiquids(liquid) {
+                            {
+                                length = tRange;
+                                cone = 60f;
+                                lifetime = tRange / speed;
+                                particles = 1;
+                            }
+                        };
+                        collidesGround = false;
+                        statusDuration = 60f * 6f;
+                        damage = 1;
+                        ammoMultiplier = 0.01f;
+                        knockback = 10f;
+                        speed = 8.5f;
+                        lifetime = tRange / speed;
+                    }
+                }, Liquids.oil, new LiquidBulletType(Liquids.oil) {
+                    {
+                        shootEffect = new SplashLiquids(liquid) {
+                            {
+                                length = tRange;
+                                cone = 60f;
+                                lifetime = tRange / speed;
+                                particles = 1;
+                            }
+                        };
+                        collidesGround = false;
+                        statusDuration = 60f * 6f;
+                        damage = 0.1f;
+                        ammoMultiplier = 0.01f;
+                        knockback = 10f;
+                        speed = 8.5f;
+                        lifetime = tRange / speed;
+                    }
+                }, Liquids.cryofluid, new LiquidBulletType(Liquids.cryofluid) {
+                    {
+                        shootEffect = new SplashLiquids(liquid) {
+                            {
+                                length = tRange;
+                                cone = 60f;
+                                lifetime = tRange / speed;
+                                particles = 1;
+                            }
+                        };
+                        collidesGround = false;
+                        statusDuration = 60f * 6f;
+                        damage = 0.1f;
+                        ammoMultiplier = 0.01f;
+                        knockback = 10f;
+                        speed = 8.5f;
+                        lifetime = tRange / speed;
+                    }
+                });
+
+            }
+        };
 
         // crafting.
         StoneFuser = new GenericCrafter("stone-fuser") {
@@ -898,14 +1167,19 @@ public class StarnerBlocks {
             {
                 healCircleColor = Color.orange.cpy().mul(1.1f, 1.1f, 1.1f, 0.25f);
                 healCircleLineColor = Color.orange.cpy().mul(1f, 1.1f, 1.1f, 0.75f);
-                laserColor = Color.orange.cpy().mul(1f, 1.1f, 1.1f, 0.75f);
+                laserColor = Color.orange.cpy().mul(1f, 1.1f, 1.1f, 0.65f);
                 beamWidth = 1.5f;
                 healRadius = 35f;
+                pulseRadius = 15f;
                 healSpeed = 0.33f;
                 statusEffect = StatusEffects.overclock;
                 coolantUse = 0.25f;
                 requirements(Category.units,
                         with(StarnerItems.MoonStone, 50, Items.silicon, 35, SunCrystal, 40));
+                laserEffect = StarnerFx.splashStar;
+                laserEffectChance = 0.1f;
+                laserEffectInterval = 5f;
+                laserEffectSpacing = 10f;
                 size = 3;
                 health = 720;
                 powerUse = 10f;

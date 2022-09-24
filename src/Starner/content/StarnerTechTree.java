@@ -31,9 +31,11 @@ public class StarnerTechTree {
                 StarConduit, mender,
                 StarDuster, scorch,
                 StarRocket, arc,
+                StarBow, hail,
                 CometFlyer, scatter,
                 CometThrower, salvo,
                 StarLancer, lancer,
+                Wind, wave,
                 // unit.
                 StarFactory, groundFactory,
                 DebriStar, StarFactory,

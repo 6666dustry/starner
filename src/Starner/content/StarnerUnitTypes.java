@@ -1,5 +1,8 @@
 package Starner.content;
 
+import Starner.entites.effect.StarTrail;
+import Starner.entites.unit.TrailUnit;
+import Starner.type.unit.TrailUnitType;
 import arc.graphics.Color;
 import mindustry.content.Blocks;
 import mindustry.entities.bullet.BasicBulletType;
@@ -8,15 +11,75 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.gen.*;
+import arc.func.Prov;
+import arc.struct.ObjectIntMap;
+import arc.struct.ObjectMap.*;
 
+@SuppressWarnings("unchecked")
 public class StarnerUnitTypes {
+    // I steal these from prog mats java which
+    // Steal from Endless Rusting which stole from Progressed Materials in the past
+    // which stole from BetaMindy
+    private static final Entry<Class<? extends Entityc>, Prov<? extends Entityc>>[] types = new Entry[] {
+            prov(TrailUnit.class, TrailUnit::new)
+    };
+
+    private static final ObjectIntMap<Class<? extends Entityc>> idMap = new ObjectIntMap<>();
+
+    /**
+     * Internal function to flatmap {@code Class -> Prov} into an {@link Entry}.
+     * 
+     * @author GlennFolker
+     */
+    private static <T extends Entityc> Entry<Class<T>, Prov<T>> prov(Class<T> type, Prov<T> prov) {
+        Entry<Class<T>, Prov<T>> entry = new Entry<>();
+        entry.key = type;
+        entry.value = prov;
+        return entry;
+    }
+
+    /**
+     * Setups all entity IDs and maps them into {@link EntityMapping}.
+     * 
+     * @author GlennFolker
+     */
+
+    private static void setupID() {
+        for (int i = 0,
+                j = 0,
+                len = EntityMapping.idMap.length;
+
+                i < len;
+
+                i++) {
+            if (EntityMapping.idMap[i] == null) {
+                idMap.put(types[j].key, i);
+                EntityMapping.idMap[i] = types[j].value;
+
+                if (++j >= types.length)
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Retrieves the class ID for a certain entity type.
+     * 
+     * @author GlennFolker
+     */
+    public static <T extends Entityc> int classID(Class<T> type) {
+        return idMap.get(type, -1);
+    }
 
     public static UnitType DebriStar, CometSlicer;
 
     public static void load() {
-        DebriStar = new UnitType("debri-star") {
+        setupID();
+
+        DebriStar = new TrailUnitType("debri-star") {
             {
-                constructor = UnitEntity::create;
+                // constructor = TrailUnit::new;
+                trailEffect = new StarTrail();
                 description = "very cheep unit.";
                 details = "flying crawler.";
                 flying = true;
@@ -25,7 +88,9 @@ public class StarnerUnitTypes {
                 fallSpeed = Float.POSITIVE_INFINITY;
                 range = 16f;
                 maxRange = 10f;
-
+                fogRadius = 3f;
+                mechStepParticles = true;
+                deathExplosionEffect = StarnerFx.splashStar;
                 weapons.add(new Weapon() {
                     {
                         mirror = false;
@@ -64,9 +129,9 @@ public class StarnerUnitTypes {
                 });
             }
         };
-        CometSlicer = new UnitType("comet-slicer") {
+        CometSlicer = new TrailUnitType("comet-slicer") {
             {
-                constructor = UnitEntity::create;
+                // constructor = TrailUnit::new;
                 description = "we are star!";
                 details = "star slice!";
                 flying = true;
@@ -76,6 +141,14 @@ public class StarnerUnitTypes {
                 range = 75f;
                 deathExplosionEffect = StarnerFx.splashStar;
                 fallSpeed = Float.POSITIVE_INFINITY;
+                mechStepParticles = true;
+                trailEffect = new StarTrail() {
+                    {
+                        length = length * 2;
+                    }
+                };
+                trailChance = 1f;
+                trailInterval = 0.1f;
                 weapons.add(new Weapon("starner-star-laser") {
                     {
                         y = 6f;

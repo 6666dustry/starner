@@ -6,9 +6,10 @@ import mindustry.world.blocks.units.RepairTurret;
 import java.util.ArrayList;
 
 import arc.func.Cons;
-import arc.func.Cons2;
 import arc.math.*;
 import arc.math.geom.*;
+import mindustry.content.Fx;
+import mindustry.entities.Effect;
 import mindustry.entities.Units;
 import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
@@ -24,23 +25,35 @@ public class StatusRepairTurret extends RepairTurret {
     public Color healCircleLineColor = Pal.heal.cpy().mul(1f, 1f, 1f, 0.75f);
     public Color healCircleColor = Pal.heal.cpy().mul(1f, 1f, 1f, 0.25f);
     public float StatusDuration = 60f;
+    public Effect laserEffect = Fx.none;
+    public float laserEffectChance = 0.05f;
+    public float laserEffectSpacing = 5f;
+    public float laserEffectInterval = 10f;
 
     public StatusRepairTurret(String name) {
         super(name);
     }
 
     public class StatusRepairPointBuild extends RepairPointBuild {
+        private float elapsedTime = Time.time;
+
+        private void drawRadius() {
+
+            float f = Interp.sine.apply(Time.time / 75f) * 10;
+            Draw.color(healCircleColor);
+            Fill.circle(lastEnd.x, lastEnd.y, healRadius + f);
+            Draw.color(healCircleLineColor);
+            Lines.stroke(strength * pulseStroke);
+            Lines.circle(lastEnd.x, lastEnd.y, healRadius + f);
+            Draw.color();
+        }
+
         @Override
         public void draw() {
+            // TODO Auto-generated method stub
             super.draw();
-            if (target != null) {
-                float f = Interp.sine.apply(Time.time / 50f) * 10;
-                Draw.color(healCircleColor);
-                Fill.circle(lastEnd.x, lastEnd.y, healRadius + f);
-                Draw.color(healCircleLineColor);
-                Lines.stroke(strength * pulseStroke);
-                Lines.circle(lastEnd.x, lastEnd.y, healRadius + f);
-                Draw.color();
+            if (target != null && efficiency > 0) {
+                drawRadius();
             }
         }
 
@@ -64,9 +77,17 @@ public class StatusRepairTurret extends RepairTurret {
             boolean healed = false;
 
             if (target != null && efficiency > 0) {
-
                 float angle = Angles.angle(x, y, target.x + offset.x, target.y + offset.y);
                 if (Angles.angleDist(angle, rotation) < 30f) {
+                    if (elapsedTime + laserEffectInterval < Time.time) {
+                        Geometry.iterateLine(0f, x, y, target.x, target.y, laserEffectSpacing, (x, y) -> {
+                            if (Mathf.chance(laserEffectChance)) {
+                                laserEffect.at(x, y, rotation);
+                            }
+                            ;
+                        });
+                        elapsedTime = Time.time;
+                    }
                     healed = true;
                     if (target.health() < target.maxHealth()) {
 
@@ -81,7 +102,6 @@ public class StatusRepairTurret extends RepairTurret {
                         ArrayList<Unit> heals = new ArrayList<Unit>();
                         Units.nearby(team, target.x, target.y, healRadius, new Cons<Unit>() {
                             public void get(Unit U) {
-                                Log.info(U);
                                 heals.add(U);
                             }
                         });
