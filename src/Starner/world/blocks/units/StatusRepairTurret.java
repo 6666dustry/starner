@@ -5,7 +5,6 @@ import mindustry.world.blocks.units.RepairTurret;
 
 import java.util.ArrayList;
 
-import arc.func.Cons;
 import arc.math.*;
 import arc.math.geom.*;
 import mindustry.content.Fx;
@@ -100,10 +99,8 @@ public class StatusRepairTurret extends RepairTurret {
 
                     if (healRadius > 0) {
                         ArrayList<Unit> heals = new ArrayList<Unit>();
-                        Units.nearby(team, target.x, target.y, healRadius, new Cons<Unit>() {
-                            public void get(Unit U) {
-                                heals.add(U);
-                            }
+                        Units.nearby(team, target.x, target.y, healRadius, U -> {
+                            heals.add(U);
                         });
                         heals.forEach((U) -> {
                             if (U.health() < U.maxHealth()) {

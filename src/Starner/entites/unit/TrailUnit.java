@@ -1,9 +1,7 @@
 package Starner.entites.unit;
 
 import Starner.content.StarnerUnitTypes;
-import arc.util.Log;
 import arc.util.Time;
-import mindustry.gen.EntityMapping;
 import mindustry.gen.UnitEntity;
 
 public class TrailUnit extends UnitEntity {

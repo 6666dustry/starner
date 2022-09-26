@@ -13,6 +13,7 @@ import mindustry.entities.UnitSorts;
 import static Starner.content.StarnerItems.*;
 import static mindustry.type.ItemStack.*;
 
+import Starner.entites.bullet.FieldBulletType;
 import Starner.entites.bullet.FragLaserBulletType;
 import Starner.entites.bullet.HealPointBulletType;
 import Starner.entites.effect.SplashLiquids;
@@ -36,7 +37,7 @@ public class StarnerBlocks {
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
-            Wind,
+            Wind, Fielder,
             // unit factory.
             StarFactory, SolarPointer;
 
@@ -1077,6 +1078,180 @@ public class StarnerBlocks {
                     }
                 });
 
+            }
+        };
+        Fielder = new ItemTurret("fielder") {
+            {
+                group = BlockGroup.turrets;
+                requirements(
+                        Category.turret,
+                        with(
+                                MoonStone, 120,
+                                CometPiece, 95,
+                                SunCrystal, 50,
+                                Items.lead, 200,
+                                Items.copper, 230));
+                description = "try some!";
+                details = "expand fields.";
+                health = 2254;
+                size = 4;
+                maxAmmo = 20;
+                inaccuracy = 5f;
+                shootSound = Sounds.artillery;
+                range = 215;
+                reload = 170;
+                targetHealing = true;
+
+                coolant = consumeCoolant(size / 10f);
+                ammo(
+                        MoonStone,
+                        new ArtilleryBulletType() {
+                            {
+                                speed = 1.5f;
+                                backColor = frontColor = Color.lightGray;
+                                height = 20f;
+                                width = 17.5f;
+                                splashDamage = 0;
+                                splashDamageRadius = -1f;
+                                fragBullets = 1;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullet = new FieldBulletType() {
+                                    {
+                                        fieldColor = Color.lightGray.cpy().a(200f);
+                                        fieldEdgeColor = Color.lightGray;
+                                        status = StatusEffects.slow;
+                                        statusDuration = 60f;
+                                        lifetime = 240f;
+                                        splashEffect = new StarTrail() {
+                                            {
+                                                colorFrom = fieldEdgeColor;
+                                                length = splashDamageRadius;
+
+                                            }
+                                        };
+                                    }
+                                };
+                            }
+                        },
+                        CometPiece,
+                        new ArtilleryBulletType() {
+                            {
+                                speed = 1.5f;
+                                backColor = frontColor = Color.sky;
+                                height = 20f;
+                                width = 17.5f;
+                                splashDamage = 0;
+                                splashDamageRadius = -1f;
+                                fragBullets = 1;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullet = new FieldBulletType() {
+                                    {
+                                        fieldColor = Color.sky.cpy().a(200f);
+                                        fieldEdgeColor = Color.sky;
+                                        status = StatusEffects.freezing;
+                                        splashDamageRadius = 70f;
+                                        statusDuration = 60f;
+                                        lifetime = 300f;
+                                        splashEffect = new StarTrail() {
+                                            {
+                                                colorFrom = fieldEdgeColor;
+                                                length = splashDamageRadius;
+
+                                            }
+                                        };
+                                    }
+                                };
+                            }
+                        },
+                        SunCrystal,
+                        new ArtilleryBulletType() {
+                            {
+                                speed = 1.5f;
+                                backColor = frontColor = Color.orange;
+                                height = 20f;
+                                width = 17.5f;
+                                splashDamage = 0;
+                                splashDamageRadius = -1f;
+                                fragBullets = 1;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullet = new FieldBulletType() {
+                                    {
+                                        fieldColor = Color.orange.cpy().a(200f);
+                                        fieldEdgeColor = Color.orange;
+                                        status = StatusEffects.melting;
+                                        splashDamage = 0.1f;
+                                        statusDuration = 60f;
+                                        lifetime = 300f;
+                                        splashEffect = new StarTrail() {
+                                            {
+                                                colorFrom = fieldEdgeColor;
+                                                length = splashDamageRadius;
+
+                                            }
+                                        };
+                                    }
+                                };
+                            }
+                        },
+                        Items.plastanium,
+                        new ArtilleryBulletType() {
+                            {
+                                speed = 1.5f;
+                                backColor = frontColor = Pal.heal;
+                                height = 20f;
+                                width = 17.5f;
+                                splashDamage = 0;
+                                healAmount = 5f;
+                                splashDamageRadius = -1f;
+                                fragBullets = 1;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullet = new FieldBulletType() {
+                                    {
+                                        splashDamageRadius = 80f;
+                                        applyTeam = true;
+                                        healAmount = 5f;
+                                        lifetime = 300f;
+                                        splashEffect = new StarTrail() {
+                                            {
+                                                colorFrom = fieldEdgeColor;
+                                                length = splashDamageRadius;
+                                            }
+                                        };
+                                    }
+                                };
+                            }
+                        }, Items.metaglass, new ArtilleryBulletType() {
+                            {
+                                speed = 1.5f;
+                                velocityRnd = 0.3f;
+                                reloadMultiplier = 2.5f;
+                                backColor = frontColor = Color.white;
+                                height = 20f;
+                                inaccuracy = 15f;
+                                width = 17.5f;
+                                splashDamage = 0;
+                                splashDamageRadius = -1f;
+                                fragBullets = 1;
+                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullet = new FieldBulletType() {
+                                    {
+                                        fieldColor = Color.white.cpy().a(220f);
+                                        fieldEdgeColor = Color.white;
+                                        status = StatusEffects.electrified;
+                                        statusDuration = 60f;
+                                        splashDamageRadius = 30f;
+                                        lifetime = 110f;
+                                        splashEffect = new StarTrail() {
+                                            {
+                                                colorFrom = fieldEdgeColor;
+                                                length = splashDamageRadius;
+
+                                            }
+                                        };
+                                    }
+                                };
+                            }
+                        });
             }
         };
 
