@@ -24,7 +24,7 @@ public class TrailUnitType extends UnitType {
     @Override
     public void update(Unit unit) {
         super.update(unit);
-        if (!unit.vel.isZero(1f) && unit instanceof TrailUnit u && trailEffect != null
+        if (!unit.vel.isZero(0.2f) && unit instanceof TrailUnit u && trailEffect != null
                 && u.trailTime + trailInterval < Time.time) {
             if (Mathf.chance(trailChance)) {
                 trailEffect.at(u.x, u.y, u.rotation, trailColor);

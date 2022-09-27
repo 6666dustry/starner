@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class FieldBulletType extends MultiSplashBulletType {
     public StatusEffect fieldStatus = StatusEffects.none;
     public Color fieldColor = Pal.heal.cpy().mul(1f, 1f, 1f, 0.1f);
-    public Color fieldEdgeColor = Pal.heal.cpy().mul(1f, 1f, 1f, 0.35f);
+    public Color fieldEdgeColor = Pal.heal;
     public float fieldEdgeThick = 2.5f;
     public float shrinkTime = 30f;
     public float spreadTime = 30f;

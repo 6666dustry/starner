@@ -36,10 +36,13 @@ public class StarnerTechTree {
                 CometThrower, salvo,
                 StarLancer, lancer,
                 Wind, wave,
+                Fielder, ripple,
                 // unit.
                 StarFactory, groundFactory,
                 DebriStar, StarFactory,
                 CometSlicer, DebriStar,
+                CometSpawner, CometSlicer,
+                CometSpawner, StarSniper,
                 SolarPointer, repairTurret);
     }
 

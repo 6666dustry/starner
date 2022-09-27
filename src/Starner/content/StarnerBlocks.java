@@ -39,7 +39,8 @@ public class StarnerBlocks {
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
             Wind, Fielder,
             // unit factory.
-            StarFactory, SolarPointer;
+            // TODO
+            StarFactory, TypeChanger, SolarPointer;
 
     public static void load() {
         StarShooter = new ItemTurret("star-shooter") {
@@ -538,7 +539,7 @@ public class StarnerBlocks {
                 description = "shot little rocket.";
                 details = "rocket!";
                 health = 900;
-                range = 205f;
+                range = 185f;
                 ;
                 size = 2;
                 reload = 100f;
@@ -547,7 +548,7 @@ public class StarnerBlocks {
                 coolant = consumeCoolant(size / 10f);
                 BulletType spawn = new BasicBulletType(3f, 22, "starner-star-bullet") {
                     {
-                        lifetime = 75f;
+                        lifetime = 78f;
                         frontColor = backColor = Color.valueOf("ffffffff");
                         despawnEffect = new Effect();
                         trailChance = 1f / 6f;
@@ -566,8 +567,8 @@ public class StarnerBlocks {
                         frontColor = backColor = Color.valueOf("ffffffff");
                         lifetime = 70f;
                         fragBullet = spawn;
-                        fragBullets = 6;
-                        fragSpread = 60f;
+                        fragBullets = 8;
+                        fragSpread = 360 / fragBullets;
                         fragRandomSpread = 0f;
                         trailChance = 1f;
                         trailEffect = new StarTrail();
@@ -634,7 +635,7 @@ public class StarnerBlocks {
                                 };
                             }
                         },
-                        StarnerItems.CometPiece, new ArtilleryBulletType(3.5f, 40) {
+                        CometPiece, new ArtilleryBulletType(3.5f, 40) {
                             {
                                 ammoMultiplier = 4;
                                 shake = 1f;
@@ -979,8 +980,10 @@ public class StarnerBlocks {
                 requirements(
                         Category.turret,
                         with(
-                                Items.copper, 30,
-                                MoonStone, 20));
+                                CometPiece, 65,
+                                Items.copper, 130,
+                                MoonStone, 80,
+                                Items.metaglass, 75));
                 shoot = new ShootAlternate() {
                     {
                         shots = 100;
@@ -1117,7 +1120,7 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        fieldColor = Color.lightGray.cpy().a(200f);
+                                        fieldColor = Color.lightGray.cpy().a(0.25f);
                                         fieldEdgeColor = Color.lightGray;
                                         status = StatusEffects.slow;
                                         statusDuration = 60f;
@@ -1146,7 +1149,7 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        fieldColor = Color.sky.cpy().a(200f);
+                                        fieldColor = Color.sky.cpy().a(0.25f);
                                         fieldEdgeColor = Color.sky;
                                         status = StatusEffects.freezing;
                                         splashDamageRadius = 70f;
@@ -1176,7 +1179,7 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        fieldColor = Color.orange.cpy().a(200f);
+                                        fieldColor = Color.orange.cpy().a(0.25f);
                                         fieldEdgeColor = Color.orange;
                                         status = StatusEffects.melting;
                                         splashDamage = 0.1f;
@@ -1235,7 +1238,7 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        fieldColor = Color.white.cpy().a(220f);
+                                        fieldColor = Color.white.cpy().a(0.25f);
                                         fieldEdgeColor = Color.white;
                                         status = StatusEffects.electrified;
                                         statusDuration = 60f;
