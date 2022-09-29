@@ -49,7 +49,7 @@ public class StatusRepairTurret extends RepairTurret {
 
         @Override
         public void draw() {
-            // TODO Auto-generated method stub
+
             super.draw();
             if (target != null && efficiency > 0) {
                 drawRadius();

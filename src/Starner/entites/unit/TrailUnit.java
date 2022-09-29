@@ -9,11 +9,12 @@ public class TrailUnit extends UnitEntity {
 
     public TrailUnit() {
         super();
+
     }
 
     public static TrailUnit create() {
-
         return new TrailUnit();
+
     }
 
     public float trailTime = Time.time;

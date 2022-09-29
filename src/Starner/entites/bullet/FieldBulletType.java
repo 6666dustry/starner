@@ -6,12 +6,9 @@ import mindustry.entities.Units;
 import mindustry.gen.*;
 import mindustry.type.StatusEffect;
 import arc.graphics.g2d.*;
-import arc.graphics.Blending;
 import arc.graphics.Color;
-import arc.graphics.Gl;
 import mindustry.graphics.Pal;
 import arc.math.Interp;
-import arc.util.Time;
 import java.util.ArrayList;
 
 public class FieldBulletType extends MultiSplashBulletType {
