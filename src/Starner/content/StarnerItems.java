@@ -29,7 +29,7 @@ public class StarnerItems {
                 flammability = 1f;
             }
         };
-        DarkMatter = new Item("sun-crystal", Color.black) {
+        DarkMatter = new Item("dark-matter", Color.black) {
             {
                 description = "dark matter. what is this?";
                 cost = 1f;
