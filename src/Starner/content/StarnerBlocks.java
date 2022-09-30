@@ -8,6 +8,7 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
 import mindustry.world.draw.*;
 import Starner.world.blocks.units.StatusRepairTurret;
+import Starner.world.blocks.defence.*;
 import mindustry.entities.UnitSorts;
 
 import static Starner.content.StarnerItems.*;
@@ -32,8 +33,10 @@ import mindustry.graphics.Pal;
 public class StarnerBlocks {
 
     public static Block
-    // production.
-    StoneFuser, CometMixer, SunConvergencer,
+    // walls.
+    CometWall, CometWallLarge,
+            // production.
+            StoneFuser, CometMixer, SunConvergencer,
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
@@ -43,6 +46,34 @@ public class StarnerBlocks {
             StarFactory, TypeChanger, SolarPointer;
 
     public static void load() {
+        CometWall = new DeflectWall("comet-wall") {
+            {
+                DeflectEffect = StatusEffects.freezing;
+                group = BlockGroup.walls;
+                requirements(
+                        Category.defense,
+                        with(
+                                CometPiece, 24));
+                description = "cool wall.";
+                details = "very cold...";
+                health = 500;
+                size = 1;
+            }
+        };
+        CometWallLarge = new DeflectWall("comet-wall-large") {
+            {
+                DeflectEffect = StatusEffects.freezing;
+                group = BlockGroup.walls;
+                requirements(
+                        Category.defense,
+                        with(
+                                CometPiece, 24));
+                description = "cool wall.";
+                details = "very cold...";
+                health = 2000;
+                size = 2;
+            }
+        };
         StarShooter = new ItemTurret("star-shooter") {
             {
                 group = BlockGroup.turrets;

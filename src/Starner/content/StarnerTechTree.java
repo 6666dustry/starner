@@ -40,8 +40,8 @@ public class StarnerTechTree {
                 // unit.
                 StarFactory, groundFactory,
                 DebriStar, StarFactory,
-                CometSlicer, DebriStar,
-                CometSpawner, CometSlicer,
+                StarSlicer, DebriStar,
+                CometSpawner, StarSlicer,
                 CometSpawner, StarSniper,
                 SolarPointer, repairTurret);
     }
