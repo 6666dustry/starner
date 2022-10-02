@@ -34,7 +34,7 @@ public class StarnerBlocks {
 
     public static Block
     // walls.
-    CometWall, CometWallLarge,
+    CometWall, CometWallLarge, SunCrystalWall, SunCrystalWallLarge,
             // production.
             StoneFuser, CometMixer, SunConvergencer,
 
@@ -42,13 +42,14 @@ public class StarnerBlocks {
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
             Wind, Fielder,
             // unit factory.
-            // TODO
-            StarFactory, TypeChanger, SolarPointer;
+            StarFactory, SolarPointer;
 
     public static void load() {
         CometWall = new DeflectWall("comet-wall") {
             {
-                DeflectEffect = StatusEffects.freezing;
+                DeflectStatus = StatusEffects.freezing;
+                trailLength = 30;
+                trailColor = Color.sky;
                 group = BlockGroup.walls;
                 requirements(
                         Category.defense,
@@ -62,7 +63,9 @@ public class StarnerBlocks {
         };
         CometWallLarge = new DeflectWall("comet-wall-large") {
             {
-                DeflectEffect = StatusEffects.freezing;
+                DeflectStatus = StatusEffects.freezing;
+                trailLength = 30;
+                trailColor = Color.sky;
                 group = BlockGroup.walls;
                 requirements(
                         Category.defense,
@@ -71,6 +74,46 @@ public class StarnerBlocks {
                 description = "cool wall.";
                 details = "very cold...";
                 health = 2000;
+                size = 2;
+            }
+        };
+        SunCrystalWall = new DeflectWall("sun-crystal-wall") {
+            {
+                DeflectStatus = StatusEffects.burning;
+                trailLength = 30;
+                lightningColor = Color.orange;
+                lightningLength = 15;
+                lightningDamage = 15f;
+                lightningChance = 0.25f;
+                trailColor = Color.orange;
+                group = BlockGroup.walls;
+                requirements(
+                        Category.defense,
+                        with(
+                                SunCrystal, 24));
+                description = "hot wall.";
+                details = "very hot...";
+                health = 750;
+                size = 1;
+            }
+        };
+        SunCrystalWallLarge = new DeflectWall("sun-crystal-wall-large") {
+            {
+                DeflectStatus = StatusEffects.burning;
+                trailLength = 30;
+                lightningColor = Color.orange;
+                lightningLength = 15;
+                lightningDamage = 15f;
+                lightningChance = 0.25f;
+                trailColor = Color.orange;
+                group = BlockGroup.walls;
+                requirements(
+                        Category.defense,
+                        with(
+                                SunCrystal, 24));
+                description = "hot wall.";
+                details = "very hot...";
+                health = 3000;
                 size = 2;
             }
         };

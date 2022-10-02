@@ -41,8 +41,11 @@ public class StarnerTechTree {
                 StarFactory, groundFactory,
                 DebriStar, StarFactory,
                 StarSlicer, DebriStar,
-                CometSpawner, StarSlicer,
-                CometSpawner, StarSniper,
+                StarStriker, StarSlicer,
+                BigStar, StarStriker,
+                MegaStar, BigStar,
+                // CometSpawner, StarSlicer,
+                // CometSpawner, CometSniper,
                 SolarPointer, repairTurret);
     }
 
