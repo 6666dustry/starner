@@ -1165,7 +1165,7 @@ public class StarnerBlocks {
                         with(
                                 MoonStone, 120,
                                 CometPiece, 95,
-                                SunCrystal, 50,
+                                Items.titanium, 100,
                                 Items.lead, 200,
                                 Items.copper, 230));
                 description = "try some!";
