@@ -44,7 +44,6 @@ public class StarnerTechTree {
                 StarStriker, StarSlicer,
                 BigStar, StarStriker,
                 MegaStar, BigStar,
-                // CometSpawner, StarSlicer,
                 // CometSpawner, CometSniper,
                 SolarPointer, repairTurret);
     }

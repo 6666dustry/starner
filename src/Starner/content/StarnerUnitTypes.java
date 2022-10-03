@@ -82,7 +82,7 @@ public class StarnerUnitTypes {
     }
 
     public static UnitType
-    // .star
+    // star.
     DebriStar, StarSlicer, StarStriker, BigStar, MegaStar,
             // comet.
             CometSpawner, CometSniper;
