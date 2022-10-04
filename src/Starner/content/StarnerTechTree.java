@@ -33,6 +33,7 @@ public class StarnerTechTree {
                 StarRocket, arc,
                 StarBow, hail,
                 CometFlyer, scatter,
+                StarBoomer, fuse,
                 CometThrower, salvo,
                 StarLancer, lancer,
                 Wind, wave,
