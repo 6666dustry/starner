@@ -17,8 +17,10 @@ import static mindustry.type.ItemStack.*;
 import Starner.entites.bullet.FieldBulletType;
 import Starner.entites.bullet.FragLaserBulletType;
 import Starner.entites.bullet.HealPointBulletType;
+import Starner.entites.bullet.SlowlyBulletType;
 import Starner.entites.effect.SplashLiquids;
 import Starner.entites.effect.StarTrail;
+import Starner.entites.pattern.ShootOnce;
 import Starner.world.draw.DrawFusion;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -27,6 +29,8 @@ import mindustry.entities.Effect;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.pattern.ShootAlternate;
+import mindustry.entities.pattern.ShootMulti;
+import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 
@@ -40,6 +44,7 @@ public class StarnerBlocks {
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
+            StarBoomer,
             Wind, Fielder,
             // unit factory.
             StarFactory, SolarPointer;
@@ -113,7 +118,7 @@ public class StarnerBlocks {
                                 SunCrystal, 24));
                 description = "hot wall.";
                 details = "very hot...";
-                health = 3000;
+                health = 3500;
                 size = 2;
             }
         };
@@ -653,7 +658,175 @@ public class StarnerBlocks {
                 };
             }
         };
-
+        CometFlyer = new ItemTurret("comet-flyer") {
+            {
+                group = BlockGroup.turrets;
+                requirements(Category.turret, with(CometPiece, 50, MoonStone, 40));
+                shoot = new ShootAlternate() {
+                    {
+                        shots = 6;
+                        barrels = 1;
+                        spread = 3.5f;
+                        shotDelay = 4f;
+                    }
+                };
+                description = "shot comets.";
+                details = "How beautiful! ... wait, I heard that somewhere?";
+                health = 1000;
+                size = 2;
+                inaccuracy = 45f;
+                maxAmmo = 30;
+                range = 180;
+                reload = 45;
+                shootSound = Sounds.missile;
+                coolant = consumeCoolant(size / 10f);
+                ammo(
+                        StarnerItems.MoonStone, new BasicBulletType(2f, 20, "starner-star-bullet") {
+                            {
+                                spin = 6f;
+                                lifetime = 60f;
+                                width = height = 10f;
+                                ammoMultiplier = 8;
+                                frontColor = backColor = Color.valueOf("ffffffff");
+                                shrinkX = 0.5f;
+                                homingPower = 0.05f;
+                                homingDelay = 30f;
+                                homingRange = 250f;
+                                trailChance = 1f / 5f;
+                                trailRotation = true;
+                                trailEffect = new StarTrail();
+                                despawnEffect = new Effect();
+                            }
+                        },
+                        Items.silicon, new BasicBulletType(2f, 25, "starner-star-bullet") {
+                            {
+                                spin = 6f;
+                                lifetime = 60f;
+                                width = height = 10f;
+                                ammoMultiplier = 10;
+                                frontColor = backColor = Color.valueOf("ffffffff");
+                                shrinkX = 0.5f;
+                                homingPower = 0.1f;
+                                homingRange = 250f;
+                                homingDelay = 30f;
+                                trailChance = 1f / 5f;
+                                trailRotation = true;
+                                trailEffect = new StarTrail();
+                                despawnEffect = new Effect();
+                            }
+                        },
+                        StarnerItems.CometPiece, new BasicBulletType(2f, 30, "starner-star-bullet") {
+                            {
+                                status = StatusEffects.freezing;
+                                ammoMultiplier = 9;
+                                frontColor = backColor = Color.valueOf("9999ffff");
+                                shrinkX = 0.5f;
+                                homingPower = 0.05f;
+                                homingRange = 250f;
+                                homingDelay = 30f;
+                                trailChance = 1f / 5f;
+                                trailRotation = true;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        colorTo = Color.valueOf("7777ffff");
+                                    }
+                                };
+                                despawnEffect = new Effect();
+                            }
+                        });
+                limitRange();
+            }
+        };
+        StarBoomer = new ItemTurret("star-boomer") {
+            {
+                group = BlockGroup.turrets;
+                requirements(
+                        Category.turret,
+                        with(
+                                Items.copper, 140,
+                                MoonStone, 100,
+                                Items.thorium, 70));
+                description = "spread star.";
+                details = "boom!";
+                health = 1700;
+                size = 3;
+                inaccuracy = 20f;
+                heatColor = Color.yellow;
+                maxAmmo = 10;
+                shoot = new ShootSpread(10, 5);
+                range = 135;
+                reload = 120;
+                shootSound = Sounds.shotgun;
+                coolant = consumeCoolant(size / 10f);
+                velocityRnd = 0.5f;
+                ammo(MoonStone, new SlowlyBulletType() {
+                    {
+                        ammoMultiplier = 2;
+                        lifetime = 120f;
+                        damage = 15;
+                        sprite = "starner-star-bullet";
+                        backColor = frontColor = Color.white;
+                        speed = 5.5f;
+                        spin = 6f;
+                        shrinkX = shrinkY = 0.75f;
+                        width = height = 12.5f;
+                    }
+                }, Items.graphite, new SlowlyBulletType() {
+                    {
+                        ammoMultiplier = 1;
+                        lifetime = 120f;
+                        damage = 15;
+                        sprite = "starner-star-bullet";
+                        backColor = frontColor = Color.white;
+                        speed = 5.5f;
+                        spin = 6f;
+                        shrinkX = shrinkY = 0.75f;
+                        width = height = 12.5f;
+                    }
+                }, CometPiece, new SlowlyBulletType() {
+                    {
+                        ammoMultiplier = 3;
+                        status = StatusEffects.freezing;
+                        lifetime = 120f;
+                        damage = 25;
+                        sprite = "starner-star-bullet";
+                        frontColor = Color.white;
+                        backColor = Color.sky;
+                        speed = 5.5f;
+                        spin = 6f;
+                        shrinkX = shrinkY = 0.75f;
+                        width = height = 12.5f;
+                    }
+                }, Items.thorium, new SlowlyBulletType() {
+                    {
+                        ammoMultiplier = 3;
+                        lifetime = 120f;
+                        damage = 30;
+                        sprite = "starner-star-bullet";
+                        frontColor = Color.white;
+                        backColor = Color.pink.cpy().saturation(0.3f);
+                        speed = 5.5f;
+                        spin = 6f;
+                        shrinkX = shrinkY = 0.75f;
+                        width = height = 12.5f;
+                    }
+                }, SunCrystal, new SlowlyBulletType() {
+                    {
+                        ammoMultiplier = 3;
+                        status = StatusEffects.burning;
+                        lifetime = 120f;
+                        damage = 40;
+                        sprite = "starner-star-bullet";
+                        frontColor = Color.white;
+                        backColor = Color.orange.cpy().saturation(0.3f);
+                        speed = 5.5f;
+                        spin = 6f;
+                        shrinkX = shrinkY = 0.75f;
+                        width = height = 12.5f;
+                    }
+                });
+            }
+        };
         CometThrower = new ItemTurret("comet-thrower") {
             {
                 group = BlockGroup.turrets;
@@ -828,85 +1001,6 @@ public class StarnerBlocks {
                                 despawnEffect = Fx.massiveExplosion;
                             }
                         });
-            }
-        };
-        CometFlyer = new ItemTurret("comet-flyer") {
-            {
-                group = BlockGroup.turrets;
-                requirements(Category.turret, with(CometPiece, 50, MoonStone, 40));
-                shoot = new ShootAlternate() {
-                    {
-                        shots = 6;
-                        barrels = 1;
-                        spread = 3.5f;
-                        shotDelay = 4f;
-                    }
-                };
-                description = "shot comets.";
-                details = "How beautiful! ... wait, I heard that somewhere?";
-                health = 1000;
-                size = 2;
-                inaccuracy = 45f;
-                maxAmmo = 30;
-                range = 180;
-                reload = 45;
-                shootSound = Sounds.missile;
-                coolant = consumeCoolant(size / 10f);
-                ammo(
-                        StarnerItems.MoonStone, new BasicBulletType(2f, 20, "starner-star-bullet") {
-                            {
-                                spin = 6f;
-                                lifetime = 60f;
-                                width = height = 10f;
-                                ammoMultiplier = 8;
-                                frontColor = backColor = Color.valueOf("ffffffff");
-                                shrinkX = 0.5f;
-                                homingPower = 0.05f;
-                                homingDelay = 30f;
-                                homingRange = 250f;
-                                trailChance = 1f / 5f;
-                                trailRotation = true;
-                                trailEffect = new StarTrail();
-                                despawnEffect = new Effect();
-                            }
-                        },
-                        Items.silicon, new BasicBulletType(2f, 25, "starner-star-bullet") {
-                            {
-                                spin = 6f;
-                                lifetime = 60f;
-                                width = height = 10f;
-                                ammoMultiplier = 10;
-                                frontColor = backColor = Color.valueOf("ffffffff");
-                                shrinkX = 0.5f;
-                                homingPower = 0.1f;
-                                homingRange = 250f;
-                                homingDelay = 30f;
-                                trailChance = 1f / 5f;
-                                trailRotation = true;
-                                trailEffect = new StarTrail();
-                                despawnEffect = new Effect();
-                            }
-                        },
-                        StarnerItems.CometPiece, new BasicBulletType(2f, 30, "starner-star-bullet") {
-                            {
-                                status = StatusEffects.freezing;
-                                ammoMultiplier = 9;
-                                frontColor = backColor = Color.valueOf("9999ffff");
-                                shrinkX = 0.5f;
-                                homingPower = 0.05f;
-                                homingRange = 250f;
-                                homingDelay = 30f;
-                                trailChance = 1f / 5f;
-                                trailRotation = true;
-                                trailEffect = new StarTrail() {
-                                    {
-                                        colorTo = Color.valueOf("7777ffff");
-                                    }
-                                };
-                                despawnEffect = new Effect();
-                            }
-                        });
-                limitRange();
             }
         };
         StarLancer = new ItemTurret("star-lancer") {
