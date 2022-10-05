@@ -1334,8 +1334,8 @@ public class StarnerBlocks {
                                 Items.titanium, 100,
                                 Items.lead, 200,
                                 Items.copper, 230));
-                description = "try some!";
-                details = "expand fields.";
+                description = "expand fields.";
+                details = "";
                 health = 2254;
                 size = 4;
                 maxAmmo = 20;
