@@ -43,7 +43,8 @@ public class StarnerBlocks {
             StoneFuser, CometMixer, SunConvergencer,
 
             // turrets.
-            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, CometFlyer, CometThrower, StarLancer, StarBow,
+            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, CometFlyer, CometThrower,
+            StarLancer, StarBow,
             StarBoomer,
             Wind, Fielder,
             // unit factory.
@@ -656,6 +657,77 @@ public class StarnerBlocks {
                         width = height = 15f;
                     }
                 };
+            }
+        };
+        StarPulser = new ItemTurret("star-pulser") {
+            {
+                group = BlockGroup.turrets;
+                requirements(Category.turret, with(Items.graphite, 50, MoonStone, 40, Items.titanium, 40));
+                shoot = new ShootAlternate() {
+                    {
+                        shots = 3;
+                        barrels = 1;
+                        spread = 3.5f;
+                        shotDelay = 5f;
+                    }
+                };
+                description = "shot pulse";
+                details = "";
+                health = 900;
+                size = 2;
+                inaccuracy = 10f;
+                maxAmmo = 10;
+                range = 160;
+                reload = 35;
+                shootSound = Sounds.missile;
+                coolant = consumeCoolant(size / 10f);
+                ammo(
+                        Items.graphite, new BulletType(3f, 15) {
+                            {
+                                lifetime = 75f;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                trailEffect = new StarnerFx.Pulse();
+                            }
+                        }, Items.silicon, new BulletType(3f, 20) {
+                            {
+                                lifetime = 75f;
+                                ammoMultiplier = 2;
+                                homingRange = 100f;
+                                homingPower = 0.01f;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                trailEffect = new StarnerFx.Pulse();
+                            }
+                        }, Items.pyratite, new BulletType(3f, 25) {
+                            {
+                                lifetime = 75f;
+                                ammoMultiplier = 4;
+                                status = StatusEffects.burning;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                trailEffect = new StarnerFx.Pulse(Color.orange);
+                            }
+                        }, Items.blastCompound, new BulletType(3f, 35) {
+                            {
+                                lifetime = 75f;
+                                ammoMultiplier = 3;
+                                splashDamageRadius = 16f;
+                                splashDamage = 10;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                trailEffect = new StarnerFx.Pulse(Color.red);
+                            }
+                        }, CometPiece, new BulletType(3f, 20) {
+                            {
+                                ammoMultiplier = 4;
+                                reloadMultiplier = 1.4f;
+                                status = StatusEffects.freezing;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                trailEffect = new StarnerFx.Pulse(Color.sky);
+                            }
+                        });
             }
         };
         CometFlyer = new ItemTurret("comet-flyer") {

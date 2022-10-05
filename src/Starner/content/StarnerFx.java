@@ -92,4 +92,24 @@ public class StarnerFx {
             });
         });
     }
+
+    public static class Pulse extends WaveEffect {
+        {
+            sizeTo = 15f;
+            lifetime = 20f;
+            lightOpacity = 0.3f;
+        }
+
+        Pulse(Color from, Color to) {
+            colorFrom = from;
+            colorTo = to;
+        }
+
+        Pulse(Color to) {
+            colorTo = to;
+        }
+
+        Pulse() {
+        }
+    }
 }
