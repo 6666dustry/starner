@@ -23,6 +23,7 @@ public class StarnerTechTree {
         newNodes(
                 // crafting.
                 StoneFuser, graphitePress,
+                StoneCrimper, multiPress,
                 CometMixer, cryofluidMixer,
                 SunConvergencer, blastMixer,
                 // turret.

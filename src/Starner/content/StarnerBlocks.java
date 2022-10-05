@@ -40,7 +40,7 @@ public class StarnerBlocks {
     // walls.
     CometWall, CometWallLarge, SunCrystalWall, SunCrystalWallLarge,
             // production.
-            StoneFuser, CometMixer, SunConvergencer,
+            StoneFuser, StoneCrimper, CometMixer, SunConvergencer,
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, CometFlyer, CometThrower,
@@ -1511,6 +1511,21 @@ public class StarnerBlocks {
                 drawer = new DrawMulti(new DrawDefault(), new DrawFusion());
             }
         };
+        StoneCrimper = new GenericCrafter("stone-crimper") {
+            {
+                craftEffect = StarnerFx.splashStar;
+                craftTime = 125f;
+                requirements(Category.crafting, with(Items.copper, 80, Items.titanium, 45, MoonStone, 30));
+                description = "crimping moon stone.";
+                size = 3;
+                itemCapacity = 20;
+                health = 477;
+                consumeItems(with(Items.pyratite, 1, Items.titanium, 5));
+                outputItem = new ItemStack(MoonStone, 10);
+                consumePower(3f);
+                drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+            }
+        };
         CometMixer = new GenericCrafter("comet-mixer") {
             {
                 requirements(Category.crafting,
@@ -1527,8 +1542,8 @@ public class StarnerBlocks {
                 craftEffect = StarnerFx.freezeAura;
                 description = "mixing comet pieces";
                 size = 3;
-                health = 500;
-                consumeItems(with(Items.scrap, 3));
+                health = 300;
+                consumeItems(with(Items.titanium, 1));
                 outputItem = new ItemStack(CometPiece, 2);
                 drawer = new DrawMulti(new DrawDefault(), new DrawLiquidRegion(), new DrawRegion("-rotate") {
                     {
