@@ -1,4 +1,4 @@
-package Starner.entites.bullet;
+package Starner.entities.bullet;
 
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;

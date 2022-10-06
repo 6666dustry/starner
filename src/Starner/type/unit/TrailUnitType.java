@@ -1,6 +1,6 @@
 package Starner.type.unit;
 
-import Starner.entites.unit.TrailUnit;
+import Starner.entities.unit.TrailUnit;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.struct.Seq;

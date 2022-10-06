@@ -1,4 +1,4 @@
-package Starner.entites.bullet;
+package Starner.entities.bullet;
 
 import mindustry.entities.bullet.PointBulletType;
 import mindustry.gen.*;

@@ -1,4 +1,4 @@
-package Starner.entites.pattern;
+package Starner.entities.pattern;
 
 import mindustry.entities.pattern.ShootSpread;
 

@@ -1,4 +1,4 @@
-package Starner.entites.unit;
+package Starner.entities.unit;
 
 import Starner.content.StarnerUnitTypes;
 import arc.util.Time;

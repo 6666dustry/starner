@@ -1,4 +1,4 @@
-package Starner.entites.effect;
+package Starner.entities.effect;
 
 import arc.math.Interp;
 import mindustry.content.Liquids;

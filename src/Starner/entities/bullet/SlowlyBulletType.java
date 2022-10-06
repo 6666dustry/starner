@@ -1,4 +1,4 @@
-package Starner.entites.bullet;
+package Starner.entities.bullet;
 
 import arc.math.Mathf;
 import arc.util.Nullable;

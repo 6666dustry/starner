@@ -1,4 +1,4 @@
-package Starner.entites.bullet;
+package Starner.entities.bullet;
 
 import arc.util.Nullable;
 import mindustry.content.Fx;

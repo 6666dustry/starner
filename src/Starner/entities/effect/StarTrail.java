@@ -1,4 +1,4 @@
-package Starner.entites.effect;
+package Starner.entities.effect;
 
 import mindustry.entities.effect.ParticleEffect;
 
