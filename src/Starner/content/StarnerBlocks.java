@@ -8,19 +8,16 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.type.*;
 import mindustry.world.draw.*;
 import Starner.world.blocks.units.StatusRepairTurret;
+import Starner.entities.bullet.*;
+import Starner.entities.effect.SplashLiquids;
+import Starner.entities.effect.StarTrail;
+import Starner.entities.pattern.ShootOnce;
 import Starner.world.blocks.defence.*;
 import mindustry.entities.UnitSorts;
 
 import static Starner.content.StarnerItems.*;
 import static mindustry.type.ItemStack.*;
 
-import Starner.entites.bullet.FieldBulletType;
-import Starner.entites.bullet.FragLaserBulletType;
-import Starner.entites.bullet.HealPointBulletType;
-import Starner.entites.bullet.SlowlyBulletType;
-import Starner.entites.effect.SplashLiquids;
-import Starner.entites.effect.StarTrail;
-import Starner.entites.pattern.ShootOnce;
 import Starner.world.draw.DrawFusion;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -29,7 +26,6 @@ import mindustry.entities.Effect;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.pattern.ShootAlternate;
-import mindustry.entities.pattern.ShootMulti;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
@@ -43,7 +39,8 @@ public class StarnerBlocks {
             StoneFuser, StoneCrimper, CometMixer, SunConvergencer,
 
             // turrets.
-            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, CometFlyer, CometThrower,
+            StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, StarFlame, CometFlyer,
+            CometThrower,
             StarLancer, StarBow,
             StarBoomer,
             Wind, Fielder,
@@ -611,6 +608,46 @@ public class StarnerBlocks {
                         });
             }
         };
+        StarFlame = new ContinuousNonDelayTurret("star-flame") {
+            {
+                shootCone = 188f;
+                unitSort = UnitSorts.strongest;
+                group = BlockGroup.turrets;
+                requirements(Category.turret, with(MoonStone, 60, Items.silicon, 65, Items.titanium, 55));
+                description = "shot small laser. damage increases depending on the time of fire.";
+                consumePower(7.5f);
+                details = "DESTROY ALL!!!";
+                health = 1250;
+                size = 2;
+                inaccuracy = 0f;
+                maxAmmo = 10;
+                reload = 45f;
+                rotateSpeed = 3.5f;
+                range = 65f;
+                shootY = 4;
+                shootSound = Sounds.laserbig;
+                loopSound = Sounds.beam;
+                heatColor = Color.yellow;
+                shootType = new ContinuousLaserTrailBulletType(5.5f) {
+                    {
+                        status = StatusEffects.melting;
+
+                        colors[0] = Color.yellow;
+                        width = 3.1f;
+                        shake = 0.25f;
+                        length = 60f;
+                        trailChance = 0.1f;
+                        trailInterval = -1f;
+                        trailEffect = new StarTrail() {
+                            {
+                                length = 40f;
+                                colorFrom = Color.yellow;
+                            }
+                        };
+                    }
+                };
+            }
+        };
 
         StarRocket = new PowerTurret("star-rocket") {
             {
@@ -684,6 +721,9 @@ public class StarnerBlocks {
                 ammo(
                         Items.graphite, new BulletType(3f, 15) {
                             {
+                                knockback = 0.75f;
+                                pierce = true;
+                                pierceCap = 2;
                                 lifetime = 75f;
                                 trailChance = 1f;
                                 trailInterval = 20f;
@@ -691,9 +731,13 @@ public class StarnerBlocks {
                             }
                         }, Items.silicon, new BulletType(3f, 20) {
                             {
+                                knockback = 0.75f;
+                                pierce = true;
+                                pierceCap = 3;
                                 lifetime = 75f;
                                 ammoMultiplier = 2;
                                 homingRange = 100f;
+                                homingDelay = 20f;
                                 homingPower = 0.01f;
                                 trailChance = 1f;
                                 trailInterval = 20f;
@@ -701,6 +745,9 @@ public class StarnerBlocks {
                             }
                         }, Items.pyratite, new BulletType(3f, 25) {
                             {
+                                knockback = .75f;
+                                pierce = true;
+                                pierceCap = 2;
                                 lifetime = 75f;
                                 ammoMultiplier = 4;
                                 status = StatusEffects.burning;
@@ -710,6 +757,9 @@ public class StarnerBlocks {
                             }
                         }, Items.blastCompound, new BulletType(3f, 35) {
                             {
+                                knockback = 1.35f;
+                                pierce = true;
+                                pierceCap = 1;
                                 lifetime = 75f;
                                 ammoMultiplier = 3;
                                 splashDamageRadius = 16f;
@@ -720,6 +770,8 @@ public class StarnerBlocks {
                             }
                         }, CometPiece, new BulletType(3f, 20) {
                             {
+                                knockback = 0.6f;
+                                pierce = true;
                                 ammoMultiplier = 4;
                                 reloadMultiplier = 1.4f;
                                 status = StatusEffects.freezing;
@@ -1515,7 +1567,7 @@ public class StarnerBlocks {
             {
                 craftEffect = StarnerFx.splashStar;
                 craftTime = 125f;
-                requirements(Category.crafting, with(Items.copper, 80, Items.titanium, 45, MoonStone, 30));
+                requirements(Category.crafting, with(Items.copper, 120, Items.titanium, 75, MoonStone, 90));
                 description = "crimping moon stone.";
                 size = 3;
                 itemCapacity = 20;

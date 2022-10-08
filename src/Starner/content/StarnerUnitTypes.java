@@ -1,10 +1,10 @@
 package Starner.content;
 
-import Starner.entites.bullet.FragLaserBulletType;
-import Starner.entites.bullet.MultiSplashBulletType;
-import Starner.entites.effect.StarTrail;
-import Starner.entites.pattern.ShootOnce;
-import Starner.entites.unit.TrailUnit;
+import Starner.entities.bullet.FragLaserBulletType;
+import Starner.entities.bullet.MultiSplashBulletType;
+import Starner.entities.effect.StarTrail;
+import Starner.entities.pattern.ShootOnce;
+import Starner.entities.unit.TrailUnit;
 import Starner.type.unit.TrailUnitType;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
@@ -615,8 +615,10 @@ public class StarnerUnitTypes {
                         Draw.color(Color.white);
                         Fill.circle(params.x, params.y, 1.5f + f);
                         // TODO draw light.
+                        Draw.z(Layer.light);
                         Drawf.light(params.x, params.y, 80f, Color.sky, 1);
                     };
+
                 });
                 hitSize = 20f;
                 description = "spawn comets";

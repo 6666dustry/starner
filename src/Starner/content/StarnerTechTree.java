@@ -37,7 +37,8 @@ public class StarnerTechTree {
                 CometFlyer, scatter,
                 StarBoomer, fuse,
                 CometThrower, ripple,
-                StarLancer, lancer,
+                StarFlame, lancer,
+                StarLancer, StarFlame,
                 Wind, wave,
                 Fielder, ripple,
                 // unit.
