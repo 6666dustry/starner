@@ -725,8 +725,8 @@ public class StarnerBlocks {
                                 pierce = true;
                                 pierceCap = 2;
                                 lifetime = 75f;
-                                trailChance = 1f;
-                                trailInterval = 20f;
+                                trailChance = 0f;
+                                trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse();
                             }
                         }, Items.silicon, new BulletType(3f, 20) {
@@ -739,8 +739,8 @@ public class StarnerBlocks {
                                 homingRange = 100f;
                                 homingDelay = 20f;
                                 homingPower = 0.01f;
-                                trailChance = 1f;
-                                trailInterval = 20f;
+                                trailChance = 0f;
+                                trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse();
                             }
                         }, Items.pyratite, new BulletType(3f, 25) {
@@ -751,8 +751,8 @@ public class StarnerBlocks {
                                 lifetime = 75f;
                                 ammoMultiplier = 4;
                                 status = StatusEffects.burning;
-                                trailChance = 1f;
-                                trailInterval = 20f;
+                                trailChance = 0f;
+                                trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse(Color.orange);
                             }
                         }, Items.blastCompound, new BulletType(3f, 35) {
@@ -764,8 +764,8 @@ public class StarnerBlocks {
                                 ammoMultiplier = 3;
                                 splashDamageRadius = 16f;
                                 splashDamage = 10;
-                                trailChance = 1f;
-                                trailInterval = 20f;
+                                trailChance = 0f;
+                                trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse(Color.red);
                             }
                         }, CometPiece, new BulletType(3f, 20) {
@@ -775,8 +775,8 @@ public class StarnerBlocks {
                                 ammoMultiplier = 4;
                                 reloadMultiplier = 1.4f;
                                 status = StatusEffects.freezing;
-                                trailChance = 1f;
-                                trailInterval = 20f;
+                                trailChance = 0f;
+                                trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse(Color.sky);
                             }
                         });
