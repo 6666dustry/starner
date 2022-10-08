@@ -719,7 +719,7 @@ public class StarnerBlocks {
                 shootSound = Sounds.missile;
                 coolant = consumeCoolant(size / 10f);
                 ammo(
-                        Items.graphite, new BulletType(3f, 15) {
+                        Items.graphite, new BasicBulletType(3f, 15) {
                             {
                                 knockback = 0.75f;
                                 pierce = true;
@@ -729,7 +729,7 @@ public class StarnerBlocks {
                                 trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse();
                             }
-                        }, Items.silicon, new BulletType(3f, 20) {
+                        }, Items.silicon, new BasicBulletType(3f, 20) {
                             {
                                 knockback = 0.75f;
                                 pierce = true;
@@ -738,12 +738,12 @@ public class StarnerBlocks {
                                 ammoMultiplier = 2;
                                 homingRange = 100f;
                                 homingDelay = 20f;
-                                homingPower = 0.01f;
+                                homingPower = 0.1f;
                                 trailChance = 0f;
                                 trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse();
                             }
-                        }, Items.pyratite, new BulletType(3f, 25) {
+                        }, Items.pyratite, new BasicBulletType(3f, 25) {
                             {
                                 knockback = .75f;
                                 pierce = true;
@@ -755,7 +755,7 @@ public class StarnerBlocks {
                                 trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse(Color.orange);
                             }
-                        }, Items.blastCompound, new BulletType(3f, 35) {
+                        }, Items.blastCompound, new BasicBulletType(3f, 35) {
                             {
                                 knockback = 1.35f;
                                 pierce = true;
@@ -768,7 +768,7 @@ public class StarnerBlocks {
                                 trailInterval = 5f;
                                 trailEffect = new StarnerFx.Pulse(Color.red);
                             }
-                        }, CometPiece, new BulletType(3f, 20) {
+                        }, CometPiece, new BasicBulletType(3f, 20) {
                             {
                                 knockback = 0.6f;
                                 pierce = true;
