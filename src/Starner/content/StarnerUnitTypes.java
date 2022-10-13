@@ -614,9 +614,9 @@ public class StarnerUnitTypes {
                         Fill.circle(params.x, params.y, 1.5f + 1f + f);
                         Draw.color(Color.white);
                         Fill.circle(params.x, params.y, 1.5f + f);
-                        // TODO draw light.
+
                         Draw.z(Layer.light);
-                        Drawf.light(params.x, params.y, 80f, Color.sky, 1);
+                        Drawf.light(params.x, params.y, 80f, Color.sky, 0.9f);
                     };
 
                 });
