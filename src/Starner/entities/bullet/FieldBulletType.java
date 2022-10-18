@@ -3,10 +3,7 @@ package Starner.entities.bullet;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
-import mindustry.entities.Effect;
-import mindustry.entities.Mover;
-import mindustry.entities.Units;
-import mindustry.entities.bullet.BulletType;
+import mindustry.entities.*;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.type.StatusEffect;
@@ -15,35 +12,25 @@ import arc.graphics.Color;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import arc.math.Interp;
-import arc.util.Log;
 import arc.util.Nullable;
 import arc.util.Time;
-import arc.util.Tmp;
 import arc.func.Cons;
-import arc.math.geom.Circle;
-import arc.math.geom.Intersector;
-import mindustry.entities.Damage;
-import mindustry.entities.Fires;
-import mindustry.gen.Unit;
+import arc.math.geom.*;
 import arc.math.Mathf;
-import mindustry.entities.abilities.ForceFieldAbility;
-
-import java.util.ArrayList;
 import static mindustry.Vars.*;
 
-public class FieldBulletType extends BulletType {
+public class FieldBulletType extends SlowlyBulletType {
     public StatusEffect fieldStatus = StatusEffects.none;
+
     public float fieldStatusDuration = 180f;
     public float fieldRadius = 60f;
-    public float fieldDamage = 0;
+    public float fieldDamage = 0.5f;
     public boolean scaledFieldDamage = false;
-    public Color fieldColor = Pal.shield;
+    public Color fieldColor = Pal.shield.cpy().a(1);
     public Effect anchorEffect = Fx.none;
     public float shrinkTime = 30f;
     public float spreadTime = 30f;
-    public boolean applyTeam = false;
-    public float shieldHealth = -1;
-    public boolean isHexagon = false;
+    public float fieldHealth = -1;
     protected static Bullet paramBullet;
     protected static FieldBulletType paramField;
     protected static float paramRadius;
@@ -68,7 +55,6 @@ public class FieldBulletType extends BulletType {
 
         public void damage(float damage) {
             shieldHealth -= damage;
-            Log.info(damage);
             if (shieldHealth <= 0) {
                 down();
             }
@@ -81,7 +67,6 @@ public class FieldBulletType extends BulletType {
         public void down() {
             shieldHealth = -1;
             downTime = Time.time;
-            // ForceFieldAbility
         }
 
         @Override
@@ -89,7 +74,7 @@ public class FieldBulletType extends BulletType {
             if (shieldHealth <= 0 || !active) {
                 return;
             }
-            alpha = Math.max(alpha - Time.delta / 20f, 0f);
+            alpha = Math.max(alpha - Time.delta / 10f, 0f);
             paramBullet = bullet;
             paramField = (FieldBulletType) bullet.type;
             paramRadius = realRadius(bullet);
@@ -100,19 +85,18 @@ public class FieldBulletType extends BulletType {
 
     protected static final Cons<Bullet> shieldConsumer = trait -> {
         if (paramBullet.mover instanceof BulletMover m && !m.isDown() && paramBullet.team != trait.team
-                && trait.type.absorbable
+                && trait.type.absorbable) {
 
-        ) {
+            if (new Circle(paramBullet.x, paramBullet.y, paramRadius).contains(trait.x, trait.y)) {
+                float disX = paramBullet.x - trait.x;
+                float disY = paramBullet.y - trait.y;
+                if (disX * disX + disY * disY < paramRadius * paramRadius) {
+                    trait.absorb();
+                    m.alpha = 1;
 
-            if ((!paramField.isHexagon
-                    || new Circle(paramBullet.x, paramBullet.y, paramRadius).contains(trait.x, trait.y))
-                    && (paramField.isHexagon || Intersector.isInsideHexagon(paramBullet.x,
-                            paramBullet.y, paramRadius * 2f, trait.x, trait.y))) {
-                trait.absorb();
-                m.alpha = 1;
-
-                Fx.absorb.at(trait);
-                m.damage(trait.damage());
+                    Fx.absorb.at(trait);
+                    m.damage(trait.damage());
+                }
             }
         }
     };
@@ -123,9 +107,12 @@ public class FieldBulletType extends BulletType {
 
     {
         speed = 0f;
+        lifetime = 300f;
         collides = false;
         despawnEffect = Fx.none;
         hitEffect = Fx.none;
+        slowPercent = 0;
+        width = height = 0;
     }
 
     @Override
@@ -137,7 +124,7 @@ public class FieldBulletType extends BulletType {
     public void createFieldEffect(Bullet b) {
         float r = realRadius(b);
         if (r > 0 && !b.absorbed) {
-            Damage.damage(b.team, b.x, b.y, fieldRadius, fieldDamage * b.damageMultiplier(), false, collidesAir,
+            Damage.damage(b.team, b.x, b.y, fieldRadius, fieldDamage * b.damageMultiplier(), true, collidesAir,
                     collidesGround, scaledFieldDamage, b);
 
             if (fieldStatus != StatusEffects.none) {
@@ -156,33 +143,8 @@ public class FieldBulletType extends BulletType {
                 indexer.eachBlock(null, b.x, b.y, fieldRadius, other -> other.team != b.team,
                         other -> Fires.create(other.tile));
             }
-
-            if (heals()) {
-
-                ArrayList<Unit> heals = new ArrayList<Unit>();
-
-                Units.nearby(b.team, b.x, b.y, r, u -> {
-                    heals.add(u);
-                });
-                heals.forEach((U) -> {
-                    if (U.health() < U.maxHealth()) {
-                        U.heal(healPercent / 100 * U.maxHealth() + healAmount);
-                    }
-                });
-                if (applyTeam) {
-                    ArrayList<Unit> applys = new ArrayList<Unit>();
-                    Units.nearby(b.team, b.x, b.y, r, u -> {
-                        applys.add(u);
-                    });
-                    applys.forEach((U) -> {
-                        if (status != null) {
-                            U.apply(status, statusDuration);
-                        }
-                    });
-                }
-            }
         }
-        if (shieldHealth > 0) {
+        if (fieldHealth > 0) {
             b.mover.move(b);
         }
     }
@@ -217,37 +179,22 @@ public class FieldBulletType extends BulletType {
         float r = realRadius(b);
 
         Draw.color(fieldColor);
-        if (b.mover instanceof BulletMover m) {
-            Color[] mixes = { b.team.color, fieldColor };
-            Color mix = Tmp.c1.lerp(mixes, 0.25f);
+        if (b.mover() instanceof BulletMover m) {
+
             Draw.color(
-                    mix,
+                    fieldColor,
                     Color.white, Mathf.clamp(m.alpha));
         }
-        Draw.color(fieldColor);
         if (Vars.renderer.animateShields) {
-            if (isHexagon) {
-                Fill.poly(b.x, b.y, 6, r);
-
-            } else {
-                Fill.circle(b.x, b.y, r);
-            }
+            Fill.circle(b.x, b.y, r);
         } else {
-            if (isHexagon) {
-                Lines.stroke(1.5f);
-                Draw.alpha(0.09f);
-                Fill.poly(b.x, b.y, 6, r);
-                Draw.alpha(1f);
-                Lines.poly(b.x, b.y, 6, r);
-            } else {
-                Lines.stroke(1.5f);
-                Draw.alpha(0.09f);
-                Fill.circle(b.x, b.y, r);
-                Draw.alpha(1f);
-                Lines.circle(b.x, b.y, r);
-            }
-
+            Lines.stroke(1.5f);
+            Draw.alpha(0.09f);
+            Fill.circle(b.x, b.y, r);
+            Draw.alpha(1f);
+            Lines.circle(b.x, b.y, r);
         }
+        anchorEffect.at(b.x, b.y, b.rotation());
         Draw.reset();
     }
 
@@ -256,7 +203,7 @@ public class FieldBulletType extends BulletType {
             float velocityScl, float lifetimeScl, Object data, @Nullable Mover mover, float aimX, float aimY) {
         Bullet b = super.create(owner, team, x, y, angle, damage,
                 velocityScl, lifetimeScl, data, mover, aimX, aimY);
-        b.mover(new BulletMover(shieldHealth));
+        b.mover(new BulletMover(fieldHealth));
         return b;
     }
 }

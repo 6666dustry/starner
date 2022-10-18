@@ -9,9 +9,7 @@ import mindustry.type.*;
 import mindustry.world.draw.*;
 import Starner.world.blocks.units.StatusRepairTurret;
 import Starner.entities.bullet.*;
-import Starner.entities.effect.SplashLiquids;
-import Starner.entities.effect.StarTrail;
-import Starner.entities.pattern.ShootOnce;
+import Starner.entities.effect.*;
 import Starner.world.blocks.defence.*;
 import mindustry.entities.UnitSorts;
 
@@ -25,8 +23,7 @@ import mindustry.content.*;
 import mindustry.entities.Effect;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
-import mindustry.entities.pattern.ShootAlternate;
-import mindustry.entities.pattern.ShootSpread;
+import mindustry.entities.pattern.*;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 
@@ -40,12 +37,14 @@ public class StarnerBlocks {
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, StarFlame, CometFlyer,
-            CometThrower,
+            CometThrower, StarBubble,
             StarLancer, StarBow,
             StarBoomer,
             Wind, Fielder,
             // unit factory.
-            StarFactory, SolarPointer;
+            StarFactory, SolarPointer,
+
+            StarDriver;
 
     public static void load() {
         CometWall = new DeflectWall("comet-wall") {
@@ -952,6 +951,59 @@ public class StarnerBlocks {
                 });
             }
         };
+        StarBubble = new ItemTurret("star-bubble") {
+            {
+                group = BlockGroup.turrets;
+                requirements(
+                        Category.turret,
+                        with(
+                                Items.copper, 240,
+                                MoonStone, 150,
+                                Items.thorium, 120,
+                                Items.titanium, 95));
+                description = "spread fields.";
+                details = "";
+                health = 1650;
+                size = 3;
+                inaccuracy = 55f;
+                heatColor = Color.yellow;
+                maxAmmo = 10;
+                shoot = new ShootSpread(6, 12);
+                range = 220;
+                reload = 105;
+                shootSound = Sounds.shotgun;
+                coolant = consumeCoolant(size / 10f);
+                velocityRnd = 0.9f;
+                ammo(Items.pyratite, new FieldBulletType() {
+                    {
+                        slowPercent = 0.0225f;
+                        speed = 6f;
+                        fieldRadius = 15f;
+                        fieldDamage = 0.5f;
+                        fieldStatus = StatusEffects.burning;
+                        fieldColor = Color.orange;
+                    }
+                }, CometPiece, new FieldBulletType() {
+                    {
+                        slowPercent = 0.0225f;
+                        speed = 6f;
+                        fieldRadius = 15f;
+                        fieldDamage = 0.25f;
+                        fieldStatus = StatusEffects.freezing;
+                        fieldColor = Color.sky;
+                    }
+                }, Items.thorium, new FieldBulletType() {
+                    {
+                        slowPercent = 0.0225f;
+                        speed = 6f;
+                        fieldRadius = 15f;
+                        fieldDamage = 0.4f;
+                        fieldStatus = StatusEffects.disarmed;
+                        fieldColor = Color.pink;
+                    }
+                });
+            }
+        };
         CometThrower = new ItemTurret("comet-thrower") {
             {
                 group = BlockGroup.turrets;
@@ -968,45 +1020,44 @@ public class StarnerBlocks {
                 recoil = 2.5f;
                 shootSound = Sounds.artillery;
                 coolant = consumeCoolant(size / 10f);
-                ammo(
-                        Items.metaglass, new ArtilleryBulletType(3.5f, 30) {
+                ammo(Items.metaglass, new ArtilleryBulletType(3.5f, 30) {
+                    {
+                        ammoMultiplier = 3;
+                        shake = 1f;
+                        velocityRnd = 0.2f;
+                        lifetime = 60f;
+                        splashDamage = 8;
+                        splashDamageRadius = 10f;
+                        shrinkX = shrinkY = 0;
+                        width = height = 15f;
+                        frontColor = backColor = Color.valueOf("bbbbffff");
+                        trailChance = 1f;
+                        trailRotation = true;
+                        trailEffect = new StarTrail() {
                             {
-                                ammoMultiplier = 3;
-                                shake = 1f;
-                                velocityRnd = 0.2f;
-                                lifetime = 60f;
-                                splashDamage = 8;
-                                splashDamageRadius = 10f;
-                                shrinkX = shrinkY = 0;
-                                width = height = 15f;
-                                frontColor = backColor = Color.valueOf("bbbbffff");
-                                trailChance = 1f;
-                                trailRotation = true;
-                                trailEffect = new StarTrail() {
-                                    {
-                                        sizeFrom = 6.5f;
-                                        colorTo = Color.valueOf("ffffffff");
-                                    }
-                                };
-                                despawnEffect = StarnerFx.freezeAura;
-                                fragBullets = 6;
-                                fragRandomSpread = 5f;
-                                fragSpread = 360f / fragBullets;
-                                fragLifeMin = fragLifeMax = 1f;
-                                fragVelocityMin = fragVelocityMax = 1f;
-                                fragBullet = new LaserBulletType(12) {
-                                    {
-                                        collidesAir = true;
-                                        lifetime = 15f;
-                                        length = 45f;
-
-                                        frontColor = Color.valueOf("ffffffff");
-                                        backColor = Color.valueOf("ffffffff");
-                                        despawnEffect = new Effect();
-                                    }
-                                };
+                                sizeFrom = 6.5f;
+                                colorTo = Color.valueOf("ffffffff");
                             }
-                        },
+                        };
+                        despawnEffect = StarnerFx.freezeAura;
+                        fragBullets = 6;
+                        fragRandomSpread = 5f;
+                        fragSpread = 360f / fragBullets;
+                        fragLifeMin = fragLifeMax = 1f;
+                        fragVelocityMin = fragVelocityMax = 1f;
+                        fragBullet = new LaserBulletType(12) {
+                            {
+                                collidesAir = true;
+                                lifetime = 15f;
+                                length = 45f;
+
+                                frontColor = Color.valueOf("ffffffff");
+                                backColor = Color.valueOf("ffffffff");
+                                despawnEffect = new Effect();
+                            }
+                        };
+                    }
+                },
                         CometPiece, new ArtilleryBulletType(3.5f, 40) {
                             {
                                 ammoMultiplier = 4;
@@ -1414,12 +1465,12 @@ public class StarnerBlocks {
                                 fragBullet = new FieldBulletType() {
                                     {
                                         fieldColor = Color.lightGray.cpy();
-                                        fieldDamage = 0.1f;
+                                        fieldDamage = 1f;
                                         lifetime = 240f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
 
                                             }
                                         };
@@ -1442,13 +1493,14 @@ public class StarnerBlocks {
                                     {
                                         fieldColor = Color.sky.cpy();
                                         fieldStatus = StatusEffects.freezing;
-                                        fieldRadius = 70f;
-                                        fieldStatusDuration = 100f;
+                                        fieldDamage = 0.1f;
+                                        fieldRadius = 90f;
+                                        fieldStatusDuration = 140f;
                                         lifetime = 300f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
 
                                             }
                                         };
@@ -1469,15 +1521,15 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
+                                        fieldDamage = 1;
                                         fieldColor = Color.orange;
                                         fieldStatus = StatusEffects.melting;
-                                        fieldDamage = 0.25f;
                                         fieldStatusDuration = 60f;
                                         lifetime = 300f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
 
                                             }
                                         };
@@ -1493,22 +1545,24 @@ public class StarnerBlocks {
                                 height = 20f;
                                 width = 17.5f;
                                 splashDamage = 0;
-                                healAmount = 5f;
+                                collidesTeam = true;
+                                healAmount = 10f;
                                 splashDamageRadius = -1f;
+                                healPercent = 100f;
                                 fragBullets = 1;
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        fieldRadius = 80f;
+                                        fieldDamage = 0.1f;
+                                        fieldRadius = 150f;
                                         fieldColor = Pal.heal;
                                         fieldStatus = StatusEffects.electrified;
-                                        applyTeam = true;
-                                        healAmount = 5f;
-                                        lifetime = 300f;
+                                        healAmount = 0.6f;
+                                        lifetime = 325f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
                                             }
                                         };
                                     }
@@ -1525,19 +1579,22 @@ public class StarnerBlocks {
                                 width = 17.5f;
                                 splashDamage = 0;
                                 splashDamageRadius = -1f;
-                                fragBullets = 1;
-                                fragLifeMin = fragLifeMax = 1f;
+                                fragBullets = 8;
+                                fragLifeMin = 0.8f;
+                                fragLifeMax = 1.2f;
                                 fragBullet = new FieldBulletType() {
                                     {
+                                        slowPercent = 0.015f;
+                                        speed = 3.5f;
                                         fieldColor = Color.white.cpy();
                                         fieldStatus = StatusEffects.slow;
-                                        fieldStatusDuration = 120f;
-                                        fieldRadius = 50f;
-                                        lifetime = 110f;
+                                        fieldStatusDuration = 90f;
+                                        fieldRadius = 25f;
+                                        lifetime = 170f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
 
                                             }
                                         };
@@ -1549,7 +1606,6 @@ public class StarnerBlocks {
                             {
                                 ammoMultiplier = 4;
                                 speed = 1.5f;
-                                backColor = frontColor = Color.orange;
                                 height = 20f;
                                 width = 17.5f;
                                 splashDamage = 0;
@@ -1558,13 +1614,15 @@ public class StarnerBlocks {
                                 fragLifeMin = fragLifeMax = 1f;
                                 fragBullet = new FieldBulletType() {
                                     {
-                                        shieldHealth = 2500;
+                                        knockback = 0.25f;
+                                        fieldDamage = 0;
+                                        fieldHealth = 2500;
                                         fieldRadius = 100;
                                         lifetime = 300f;
                                         anchorEffect = new StarTrail() {
                                             {
                                                 colorFrom = fieldColor;
-                                                length = splashDamageRadius;
+                                                length = fieldRadius;
 
                                             }
                                         };

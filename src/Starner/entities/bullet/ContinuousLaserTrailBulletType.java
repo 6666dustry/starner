@@ -9,8 +9,8 @@ import mindustry.entities.Damage;
 
 public class ContinuousLaserTrailBulletType extends ContinuousLaserBulletType {
     public float trailSpacing = 3f;
-    public float increaseDamage = 1f;
-    public float maxDamage = 10f;
+    public float increaseDamage = 0.1f;
+    public float maxDamage = 15f;
 
     // TODO this name is too long.
     public ContinuousLaserTrailBulletType(float damage) {
@@ -29,8 +29,8 @@ public class ContinuousLaserTrailBulletType extends ContinuousLaserBulletType {
     @Override
     public void update(Bullet b) {
         updateTrailEffects(b);
-        if (b.damage < maxDamage) {
-            b.damage(b.damage + increaseDamage);
+        if (b.damage < damage + maxDamage) {
+            b.damage(b.damage() + increaseDamage);
         }
         if (!continuous)
             return;

@@ -39,7 +39,8 @@ public class StarnerTechTree {
                 CometThrower, ripple,
                 StarFlame, lancer,
                 StarLancer, StarFlame,
-                Wind, wave,
+                StarBubble, wave,
+                Wind, StarBubble,
                 Fielder, ripple,
                 // unit.
                 StarFactory, groundFactory,
