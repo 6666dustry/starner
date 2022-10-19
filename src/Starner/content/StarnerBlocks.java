@@ -34,6 +34,7 @@ public class StarnerBlocks {
     CometWall, CometWallLarge, SunCrystalWall, SunCrystalWallLarge,
             // production.
             StoneFuser, StoneCrimper, CometMixer, SunConvergencer,
+            StarDisassembler,
 
             // turrets.
             StarShooter, StarCannon, StarConduit, StarDuster, StarRocket, StarPulser, StarFlame, CometFlyer,
@@ -43,7 +44,7 @@ public class StarnerBlocks {
             Wind, Fielder,
             // unit factory.
             StarFactory, SolarPointer,
-
+            // TODO
             StarDriver;
 
     public static void load() {
@@ -458,7 +459,7 @@ public class StarnerBlocks {
                                 trailEffect = new StarTrail();
                             }
                         },
-                        StarnerItems.CometPiece, new BasicBulletType(3f, 20, "starner-star-bullet") {
+                        CometPiece, new BasicBulletType(3f, 20, "starner-star-bullet") {
                             {
                                 status = StatusEffects.freezing;
                                 spin = 6f;
@@ -466,12 +467,31 @@ public class StarnerBlocks {
                                 width = height = 5f;
                                 ammoMultiplier = 10;
                                 frontColor = Color.valueOf("ffffffff");
-                                backColor = Color.valueOf("bbbbffff");
+                                backColor = Color.sky;
                                 despawnEffect = new Effect();
                                 trailChance = 1f / 5f;
                                 trailEffect = new StarTrail() {
                                     {
-                                        colorTo = Color.valueOf("bbbbffff");
+                                        colorTo = Color.sky;
+                                    }
+                                };
+                            }
+                        }, Items.titanium, new BasicBulletType(3f, 22, "starner-star-bullet") {
+                            {
+                                status = StatusEffects.freezing;
+                                statusDuration = 60f;
+                                spin = 6f;
+                                lifetime = 46f;
+                                width = height = 6.5f;
+                                reloadMultiplier = 0.7f;
+                                knockback = 1.2f;
+                                ammoMultiplier = 6;
+                                frontColor = backColor = Color.cyan;
+                                despawnEffect = new Effect();
+                                trailChance = 1f / 5f;
+                                trailEffect = new StarTrail() {
+                                    {
+                                        colorTo = Color.cyan;
                                     }
                                 };
                             }
@@ -541,7 +561,7 @@ public class StarnerBlocks {
                                 reloadMultiplier = 0.6f;
                                 speed = brange;
                                 buildingDamageMultiplier = 0.1f;
-                                damage = 300;
+                                damage = 250;
                                 trailSpacing = 1f;
                                 trailEffect = new StarTrail();
                                 ammoMultiplier = 1;
@@ -1188,7 +1208,7 @@ public class StarnerBlocks {
                                 Items.copper, 100,
                                 CometPiece, 50, MoonStone, 60,
                                 Items.titanium, 40));
-                description = "";
+                description = "super lancer.";
                 details = "strike!";
                 health = 1600;
                 size = 3;
@@ -1671,8 +1691,8 @@ public class StarnerBlocks {
                 hasLiquids = hasPower = consumesPower = true;
                 liquidCapacity = 50f;
                 consumePower(120f / 60f);
-                consumeLiquid(Liquids.cryofluid, 2f / 60f);
-                updateEffect = StarnerFx.splashStar;
+                consumeLiquid(Liquids.cryofluid, 12f / 60f);
+                updateEffect = new StarTrail();
                 updateEffectChance = 0.25f;
                 craftEffect = StarnerFx.freezeAura;
                 description = "mixing comet pieces";
@@ -1695,11 +1715,11 @@ public class StarnerBlocks {
                                 CometPiece, 70,
                                 StarnerItems.MoonStone, 80, Items.silicon, 60, Items.metaglass, 60,
                                 Items.titanium, 40));
-                craftTime = 90f;
+                craftTime = 270f;
                 hasLiquids = hasPower = consumesPower = true;
                 liquidCapacity = 50f;
                 consumePower(240f / 60f);
-                consumeLiquid(Liquids.oil, 2f / 60f);
+                consumeLiquid(Liquids.oil, 12f / 60f);
                 craftEffect = StarnerFx.fireAura;
                 updateEffect = new MultiEffect(Fx.fallSmoke, new StarTrail(), Fx.lava);
                 updateEffectChance = 0.5f;

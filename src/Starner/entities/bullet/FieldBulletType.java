@@ -17,6 +17,9 @@ import arc.util.Time;
 import arc.func.Cons;
 import arc.math.geom.*;
 import arc.math.Mathf;
+import arc.*;
+import mindustry.game.EventType.*;
+
 import static mindustry.Vars.*;
 
 public class FieldBulletType extends SlowlyBulletType {
@@ -34,6 +37,8 @@ public class FieldBulletType extends SlowlyBulletType {
     protected static Bullet paramBullet;
     protected static FieldBulletType paramField;
     protected static float paramRadius;
+    private static final Vec2 vec = new Vec2();
+    private static final Rect rect = new Rect();
 
     private class BulletMover implements Mover {
 
@@ -124,12 +129,39 @@ public class FieldBulletType extends SlowlyBulletType {
     public void createFieldEffect(Bullet b) {
         float r = realRadius(b);
         if (r > 0 && !b.absorbed) {
-            Damage.damage(b.team, b.x, b.y, fieldRadius, fieldDamage * b.damageMultiplier(), true, collidesAir,
-                    collidesGround, scaledFieldDamage, b);
+
+            Cons<Unit> cons = entity -> {
+                if (entity.team == b.team || !entity.checkTarget(collidesAir, collidesGround) || !entity.hittable()
+                        || !entity.within(b.x, b.y, fieldRadius + (scaledFieldDamage ? entity.hitSize / 2f : 0f))) {
+                    return;
+                }
+                float falloff = 0.4f;
+                float scaled = Mathf
+                        .lerp(1f - (scaledFieldDamage ? Math.max(0, entity.dst(b.x, b.y) - entity.type.hitSize / 2)
+                                : entity.dst(b.x, b.y)) / fieldRadius, 1f, falloff);
+                float amount = fieldDamage * scaled;
+
+                entity.damage(amount);
+                float dst = vec.set(entity.x - b.x, entity.y - b.y).len();
+                entity.vel.add(vec.setLength((1f - dst / fieldRadius) * 2f / entity.mass()));
+
+                if (fieldDamage
+                        * b.damageMultiplier() >= 9999999f && entity.isPlayer()) {
+                    Events.fire(Trigger.exclusionDeath);
+                }
+            };
+
+            rect.setSize(fieldRadius * 2).setCenter(b.x, b.y);
+            if (b.team != null) {
+                Units.nearbyEnemies(b.team, rect, cons);
+            } else {
+                Units.nearby(rect, cons);
+            }
 
             if (fieldStatus != StatusEffects.none) {
                 Damage.status(b.team, b.x, b.y, fieldRadius, fieldStatus, fieldStatusDuration, collidesAir,
                         collidesGround);
+
             }
 
             if (heals()) {
