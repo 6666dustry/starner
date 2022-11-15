@@ -11,7 +11,25 @@ author: "many bear"
 main: "Starner.Starner"
 
 #the mod description as seen in the mod dialog
-description: "[yellow]stars are falling..."
+description: "
+welcome to "starner"!
+
+this mod add wonderful content.
+
+small turret which spreads star.
+
+big unit which spreads star.
+
+factory which spreads star.
+
+have fun!
+
+
+
+stars are falling...
+
+still falling...
+"
 
 #the mod version
 version: 1
