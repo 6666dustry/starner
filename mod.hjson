@@ -10,9 +10,13 @@ author: "many bear"
 #the fully qualified main class of the mod
 main: "Starner.Starner"
 
+#short description displayed under the title
+subtitle: "star is star."
+repo: 6666dustry/starner
+
 #the mod description as seen in the mod dialog
 description: "
-welcome to "starner"!
+welcome to 'starner'!
 
 this mod add wonderful content.
 
