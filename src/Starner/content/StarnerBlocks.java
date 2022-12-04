@@ -72,8 +72,6 @@ public class StarnerBlocks {
             Category.defense,
             with(
                 CometPiece, 24));
-        description = "cool wall.";
-        details = "very cold...";
         health = 2000;
         size = 2;
       }
@@ -93,8 +91,6 @@ public class StarnerBlocks {
             Category.defense,
             with(
                 SunCrystal, 24));
-        description = "hot wall.";
-        details = "very hot...";
         health = 750;
         size = 1;
       }
@@ -114,8 +110,6 @@ public class StarnerBlocks {
             Category.defense,
             with(
                 SunCrystal, 24));
-        description = "hot wall.";
-        details = "very hot...";
         health = 3500;
         size = 2;
       }
@@ -129,8 +123,6 @@ public class StarnerBlocks {
             with(
                 Items.copper, 30,
                 MoonStone, 20));
-        description = "shot star.";
-        details = "How beautiful!";
         health = 300;
         size = 1;
         inaccuracy = 10f;
@@ -283,8 +275,6 @@ public class StarnerBlocks {
             shots = 3;
           }
         };
-        description = "shot some stars at once.";
-        details = "How many...?";
         health = 750;
         size = 2;
         targetAir = false;
@@ -358,8 +348,6 @@ public class StarnerBlocks {
                 MoonStone, 30,
                 Items.silicon, 40,
                 Items.metaglass, 30));
-        description = "make aura.";
-        details = "splash!";
         health = 800;
         size = 2;
         maxAmmo = 27;
@@ -435,8 +423,6 @@ public class StarnerBlocks {
       {
         group = BlockGroup.turrets;
         requirements(Category.turret, with(MoonStone, 50, Items.copper, 75, Items.lead, 75));
-        description = "shot many many star dust.";
-        details = "looks like snow?";
         shootY = -1.5f;
         health = 850;
         size = 2;
@@ -505,8 +491,6 @@ public class StarnerBlocks {
         unitSort = UnitSorts.strongest;
         group = BlockGroup.turrets;
         requirements(Category.turret, with(MoonStone, 50, Items.copper, 65, Items.lead, 45));
-        description = "shot single bullet.";
-        details = "bow.";
         health = 750;
         size = 2;
         inaccuracy = 0f;
@@ -635,9 +619,7 @@ public class StarnerBlocks {
         unitSort = UnitSorts.strongest;
         group = BlockGroup.turrets;
         requirements(Category.turret, with(MoonStone, 60, Items.silicon, 65, Items.titanium, 55));
-        description = "shot small laser. damage increases depending on the time of fire.";
         consumePower(7.5f);
-        details = "DESTROY ALL!!!";
         health = 1250;
         size = 2;
         inaccuracy = 0f;
@@ -674,11 +656,8 @@ public class StarnerBlocks {
       {
         group = BlockGroup.turrets;
         requirements(Category.turret, with(MoonStone, 100, Items.silicon, 70, Items.metaglass, 80));
-        description = "shot little rocket.";
-        details = "rocket!";
         health = 900;
         range = 185f;
-        ;
         size = 2;
         reload = 100f;
         consumePower(200f / 60f);
@@ -729,8 +708,6 @@ public class StarnerBlocks {
             shotDelay = 5f;
           }
         };
-        description = "shot pulse";
-        details = "";
         health = 900;
         size = 2;
         inaccuracy = 10f;
@@ -815,8 +792,6 @@ public class StarnerBlocks {
             shotDelay = 4f;
           }
         };
-        description = "shot comets.";
-        details = "How beautiful! ... wait, I heard that somewhere?";
         health = 1000;
         size = 2;
         inaccuracy = 45f;
@@ -891,8 +866,6 @@ public class StarnerBlocks {
                 Items.copper, 140,
                 MoonStone, 100,
                 Items.thorium, 70));
-        description = "spread star.";
-        details = "boom!";
         health = 1700;
         size = 3;
         inaccuracy = 20f;
@@ -982,8 +955,6 @@ public class StarnerBlocks {
                 MoonStone, 150,
                 Items.thorium, 120,
                 Items.titanium, 95));
-        description = "spread fields.";
-        details = "";
         health = 1650;
         size = 3;
         inaccuracy = 55f;
@@ -1029,8 +1000,6 @@ public class StarnerBlocks {
       {
         group = BlockGroup.turrets;
         requirements(Category.turret, with(CometPiece, 85, MoonStone, 115, Items.copper, 140));
-        description = "throw comet.";
-        details = "boom!";
         health = 1150;
         size = 3;
         inaccuracy = 20f;
@@ -1209,8 +1178,6 @@ public class StarnerBlocks {
                 Items.copper, 100,
                 CometPiece, 50, MoonStone, 60,
                 Items.titanium, 40));
-        description = "super lancer.";
-        details = "strike!";
         health = 1600;
         size = 3;
         inaccuracy = 0f;
@@ -1356,10 +1323,7 @@ public class StarnerBlocks {
             spread = 3.5f;
           }
         };
-
         shootSound = Sounds.bigshot;
-        description = "blast liquids.";
-        details = "shower!";
         health = 1860;
         size = 3;
         inaccuracy = 60f;
@@ -1459,8 +1423,6 @@ public class StarnerBlocks {
                 Items.titanium, 100,
                 Items.lead, 200,
                 Items.copper, 230));
-        description = "expand status fields, or force fields.";
-        details = "";
         health = 2254;
         size = 4;
         maxAmmo = 20;
@@ -1659,7 +1621,6 @@ public class StarnerBlocks {
       {
         craftEffect = StarnerFx.splashStar;
         requirements(Category.crafting, with(Items.copper, 40, Items.lead, 25));
-        description = "fusing moon stone.";
         size = 2;
         health = 350;
         consumeItems(with(Items.scrap, 4, Items.coal, 1));
@@ -1672,7 +1633,6 @@ public class StarnerBlocks {
         craftEffect = StarnerFx.splashStar;
         craftTime = 125f;
         requirements(Category.crafting, with(Items.copper, 120, Items.titanium, 75, MoonStone, 90));
-        description = "crimping moon stone.";
         size = 3;
         itemCapacity = 20;
         health = 477;
@@ -1696,7 +1656,6 @@ public class StarnerBlocks {
         updateEffect = new StarTrail();
         updateEffectChance = 0.25f;
         craftEffect = StarnerFx.freezeAura;
-        description = "mixing comet pieces";
         size = 3;
         health = 300;
         consumeItems(with(Items.titanium, 1));
@@ -1724,8 +1683,6 @@ public class StarnerBlocks {
         craftEffect = StarnerFx.fireAura;
         updateEffect = new MultiEffect(Fx.fallSmoke, new StarTrail(), Fx.lava);
         updateEffectChance = 0.5f;
-        description = "convergence sun crystal.";
-        details = "feels like power of sun...";
         size = 3;
         health = 500;
         consumeItems(with(Items.pyratite, 1, Items.blastCompound, 1));

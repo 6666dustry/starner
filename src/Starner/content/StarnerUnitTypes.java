@@ -97,8 +97,6 @@ public class StarnerUnitTypes {
             y = -5;
           }
         });
-        description = "very cheep unit.";
-        details = "flying crawler.";
         flying = true;
         lowAltitude = true;
         speed = 3.5f;
@@ -148,8 +146,6 @@ public class StarnerUnitTypes {
     };
     StarSlicer = new TrailUnitType("star-slicer") {
       {
-        description = "we are star!";
-        details = "";
         flying = true;
         lowAltitude = true;
         speed = 2.5f;
@@ -219,8 +215,6 @@ public class StarnerUnitTypes {
           }
         });
         rotateSpeed = 2.5f;
-        description = "short range unit. and has a disposable force field.";
-        details = "bang!";
         hitSize = 16f;
         flying = true;
         lowAltitude = true;
@@ -270,8 +264,6 @@ public class StarnerUnitTypes {
           }
         });
         rotateSpeed = 1.75f;
-        description = "big star.";
-        details = "star is my god.";
         hitSize = 40f;
         flying = true;
         lowAltitude = true;
@@ -406,8 +398,6 @@ public class StarnerUnitTypes {
             y = -35;
           }
         });
-        description = "MEGASTAR";
-        details = "very strong.";
         flying = true;
         rotateSpeed = 1f;
         speed = 0.75f;
@@ -621,8 +611,6 @@ public class StarnerUnitTypes {
 
         });
         hitSize = 20f;
-        description = "spawn comets";
-        details = "";
         flying = true;
         lowAltitude = true;
         speed = 1.5f;
@@ -694,8 +682,6 @@ public class StarnerUnitTypes {
           }
         });
         rotateSpeed = 2.5f;
-        description = "long range unit.";
-        details = "snipe!";
         hitSize = 48f;
         flying = true;
         lowAltitude = true;
